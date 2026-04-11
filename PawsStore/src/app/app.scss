@@ -1,0 +1,10 @@
+// Гарантирует, что футер всегда прижат к низу
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}

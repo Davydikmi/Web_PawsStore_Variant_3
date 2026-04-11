@@ -1,0 +1,87 @@
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-3 $spacing-6;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  border-radius: $radius-lg;
+  transition: all $transition-normal;
+  cursor: pointer;
+  border: none;
+  
+  &:hover {
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+@mixin card-base {
+  background: $bg-white;
+  border-radius: $radius-xl;
+  box-shadow: $shadow;
+  transition: box-shadow $transition-normal, transform $transition-normal;
+  
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-4px);
+  }
+}
+
+@mixin nav-link {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $text-secondary;
+  text-decoration: none;
+  transition: color $transition-fast;
+  
+  &:hover {
+    color: $primary-500;
+  }
+  
+  &.active {
+    color: $primary-500;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+@mixin responsive-grid($cols-mobile, $cols-tablet, $cols-desktop) {
+  display: grid;
+  grid-template-columns: repeat($cols-mobile, 1fr);
+  gap: $spacing-4;
+  
+  @include md {
+    grid-template-columns: repeat($cols-tablet, 1fr);
+  }
+  
+  @include lg {
+    grid-template-columns: repeat($cols-desktop, 1fr);
+  }
+}

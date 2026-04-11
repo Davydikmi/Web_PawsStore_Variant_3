@@ -1,28 +1,14 @@
-$header-height: 64px;
-$header-height-lg: 80px;
-$primary-orange: #f97316;
-$text-gray-700: #374151;
-$text-gray-900: #111827;
-$bg-gray-100: #f3f4f6;
-$border-radius-full: 9999px;
-$transition: color 0.2s ease, background-color 0.2s ease;
-
-// Breakpoints
-$breakpoint-sm: 640px;
-$breakpoint-lg: 1024px;
-
-// ===========================================
-// ОСНОВНОЙ КОНТЕЙНЕР
-// ===========================================
+@import '../../../app/styles/variables';
+@import '../../../app/styles/mixins';
 .header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: #fff;
-  border-bottom: 1px solid #e5e7eb;
+  background: $bg-white;
+  border-bottom: 1px solid $border-light;
   height: $header-height;
   
-  @media (min-width: $breakpoint-lg) {
+  @include lg {
     height: $header-height-lg;
   }
 }
@@ -30,25 +16,30 @@ $breakpoint-lg: 1024px;
 .header-container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 $spacing-4;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: $spacing-4;
   
-  @media (min-width: $breakpoint-sm) {
-    padding: 0 24px;
+  @include sm {
+    padding: 0 $spacing-6;
+  }
+  
+  @include lg {
+    padding: 0 $spacing-8;
   }
 }
 
 // ===========================================
-// ЛОГОТИП
+// LOGO
 // ===========================================
+
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: $spacing-2;
   text-decoration: none;
   flex-shrink: 0;
   
@@ -58,57 +49,49 @@ $breakpoint-lg: 1024px;
 }
 
 .logo-icon {
-  width: 40px;
-  height: 40px;
-  background: $primary-orange;
-  border-radius: $border-radius-full;
+  width: $spacing-10;
+  height: $spacing-10;
+  background: $primary-500;
+  border-radius: $radius-full;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   
   svg {
-    width: 24px;
-    height: 24px;
-    stroke: #fff;
+    width: $spacing-6;
+    height: $spacing-6;
+    stroke: $text-white;
   }
 }
 
 .logo-text {
-  font-size: 20px;
-  font-weight: 600;
-  color: $text-gray-900;
-
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
 }
 
 // ===========================================
-// НАВИГАЦИЯ
+// NAVIGATION (DESKTOP)
 // ===========================================
+
 .nav-desktop {
   display: none;
   align-items: center;
-  gap: 32px;
+  gap: $spacing-8;
   
-  @media (min-width: $breakpoint-lg) {
+  @include lg {
     display: flex;
   }
 }
 
 .nav-link {
-  font-size: 16px;
-  font-weight: 500;
-  color: $text-gray-700;
-  text-decoration: none;
-  transition: $transition;
+  @include nav-link; 
   position: relative;
-  padding: 8px 0;
-  
-  &:hover {
-    color: $primary-orange;
-  }
+  padding: $spacing-2 0;
   
   &.active {
-    color: $primary-orange;
+    color: $primary-500;
     
     &::after {
       content: '';
@@ -117,120 +100,113 @@ $breakpoint-lg: 1024px;
       left: 0;
       right: 0;
       height: 2px;
-      background: $primary-orange;
+      background: $primary-500;
       border-radius: 2px;
     }
   }
 }
 
 // ===========================================
-// ДЕЙСТВИЯ (поиск, корзина, меню)
+// ACTIONS (search, cart, menu)
 // ===========================================
+
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: $spacing-4;
   flex-shrink: 0;
 }
 
 .action-btn {
-  padding: 8px;
+  padding: $spacing-2;
   background: transparent;
   border: none;
-  border-radius: $border-radius-full;
+  border-radius: $radius-full;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: $transition;
+  transition: background-color $transition-fast;
   position: relative;
   
   &:hover {
-    background: $bg-gray-100;
+    background: $gray-100;
   }
   
   svg {
-    width: 20px;
-    height: 20px;
-    stroke: $text-gray-700;
+    width: $spacing-5;
+    height: $spacing-5;
+    stroke: $text-secondary;
   }
 }
 
-.cart-btn {
-  text-decoration: none;
-}
-
+// Cart badge
 .cart-badge {
   position: absolute;
   top: 2px;
   right: 2px;
-  min-width: 18px;
-  height: 18px;
-  padding: 0 5px;
-  background: $primary-orange;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 600;
-  border-radius: 9px;
+  min-width: $spacing-4;
+  height: $spacing-4;
+  padding: 0 $spacing-1;
+  background: $primary-500;
+  color: $text-white;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  border-radius: $radius-lg;
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
 }
 
-// Кнопка мобильного меню
+// Mobile menu button
 .mobile-menu-btn {
-  @media (min-width: $breakpoint-lg) {
+  @include lg {
     display: none;
   }
 }
 
 // ===========================================
-// МОБИЛЬНОЕ МЕНЮ
+// MOBILE MENU
 // ===========================================
+
 .nav-mobile {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  background: #fff;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 16px;
+  background: $bg-white;
+  border-bottom: 1px solid $border-light;
+  padding: $spacing-4;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  gap: $spacing-2;
+  box-shadow: $shadow-lg;
+  animation: slideDown $transition-normal ease;
   
-  @media (min-width: $breakpoint-lg) {
+  @include lg {
     display: none;
   }
 }
 
 .nav-link-mobile {
-  font-size: 16px;
-  font-weight: 500;
-  color: $text-gray-700;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  color: $text-secondary;
   text-decoration: none;
-  padding: 12px 16px;
-  border-radius: 8px;
-  transition: $transition;
+  padding: $spacing-3 $spacing-4;
+  border-radius: $radius-lg;
+  transition: all $transition-fast;
   
   &:hover {
-    background: $bg-gray-100;
-    color: $primary-orange;
+    background: $gray-100;
+    color: $primary-500;
   }
   
   &.active {
-    background: #fff7ed;
-    color: $primary-orange;
+    background: $primary-50;
+    color: $primary-500;
   }
-}
-
-// ===========================================
-// АНИМАЦИИ
-// ===========================================
-.nav-mobile {
-  animation: slideDown 0.2s ease;
 }
 
 @keyframes slideDown {
@@ -245,14 +221,15 @@ $breakpoint-lg: 1024px;
 }
 
 // ===========================================
-// ДОПОЛНИТЕЛЬНО: фокус для доступности
+// ACCESSIBILITY
 // ===========================================
+
 .nav-link,
 .nav-link-mobile,
 .action-btn,
 .logo {
   &:focus-visible {
-    outline: 2px solid $primary-orange;
+    outline: 2px solid $primary-500;
     outline-offset: 2px;
   }
 }

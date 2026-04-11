@@ -1,0 +1,250 @@
+@import '../../../app/styles/variables';
+@import '../../../app/styles/mixins';
+
+// ===========================================
+// FOOTER STYLES
+// ===========================================
+
+.footer {
+  background: $bg-dark;
+  color: $text-light;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: $spacing-12 $spacing-4 $spacing-6;
+  
+  @include sm {
+    padding: $spacing-12 $spacing-6 $spacing-6;
+  }
+  
+  @include lg {
+    padding: $spacing-12 $spacing-8 $spacing-6;
+  }
+}
+
+// ===========================================
+// GRID LAYOUT 
+// ===========================================
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-8;
+  margin-bottom: $spacing-8;
+  
+  @include sm {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include lg {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// ===========================================
+// BRAND SECTION
+// ===========================================
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  text-decoration: none;
+  margin-bottom: $spacing-4;
+  
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.logo-icon {
+  width: $spacing-10;
+  height: $spacing-10;
+  background: $primary-500;
+  border-radius: $radius-full;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  
+  svg {
+    width: $spacing-6;
+    height: $spacing-6;
+    stroke: $text-white;
+  }
+}
+
+.logo-text {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $text-white;
+}
+
+.footer-description {
+  font-size: $font-size-sm;
+  color: $text-muted;
+  line-height: $line-height-relaxed;
+  margin: 0;
+}
+
+// ===========================================
+// SECTIONS
+// ===========================================
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-title {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $text-white;
+  margin-bottom: $spacing-4;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.footer-link {
+  font-size: $font-size-sm;
+  color: $text-light;
+  text-decoration: none;
+  transition: color $transition-fast;
+  
+  &:hover {
+    color: $primary-500;
+  }
+}
+
+// ===========================================
+// NEWSLETTER FORM
+// ===========================================
+
+.newsletter-form {
+  display: flex;
+  gap: $spacing-2;
+}
+
+.newsletter-input {
+  flex: 1;
+  padding: $spacing-2 $spacing-3;
+  background: $gray-800;
+  border: 1px solid $border-dark;
+  border-radius: $radius-lg;
+  font-size: $font-size-sm;
+  color: $text-white;
+  
+  &::placeholder {
+    color: $text-muted;
+  }
+  
+  &:focus {
+    outline: none;
+    border-color: $primary-500;
+  }
+}
+
+.newsletter-btn {
+  padding: $spacing-2 $spacing-4;
+  background: $primary-500;
+  color: $text-white;
+  border: none;
+  border-radius: $radius-lg;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color $transition-fast;
+  
+  &:hover {
+    background: $primary-600;
+  }
+  
+  svg {
+    width: $spacing-4;
+    height: $spacing-4;
+  }
+}
+
+// ===========================================
+// FOOTER BOTTOM
+// ===========================================
+
+.footer-bottom {
+  padding-top: $spacing-8;
+  border-top: 1px solid $border-dark;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-4;
+  
+  @include sm {
+    flex-direction: row;
+  }
+}
+
+.copyright {
+  font-size: $font-size-sm;
+  color: $text-muted;
+  margin: 0;
+  text-align: center;
+  
+  @include sm {
+    text-align: left;
+  }
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+}
+
+.social-link {
+  color: $text-muted;
+  transition: color $transition-fast;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    color: $primary-500;
+  }
+  
+  svg {
+    width: $spacing-5;
+    height: $spacing-5;
+  }
+}
+
+// ===========================================
+// ACCESSIBILITY
+// ===========================================
+
+.footer-link,
+.newsletter-input,
+.newsletter-btn,
+.social-link,
+.footer-logo {
+  &:focus-visible {
+    outline: 2px solid $primary-500;
+    outline-offset: 2px;
+  }
+}
