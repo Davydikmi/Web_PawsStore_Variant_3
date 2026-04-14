@@ -1,1 +1,336 @@
-<p>catalog works!</p>
+<div class="catalog-page">
+  
+  <!-- Градиентный баннер -->
+  <div class="hero-banner">
+    <div class="container">
+      <h1 class="banner-title">Shop All Products</h1>
+      <p class="banner-subtitle">Discover the best products for your furry friends</p>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="catalog-content">
+
+      <!-- Сайдбар с фильтрами (десктоп) -->
+      <aside class="filters-sidebar">
+        <div class="filters-header">
+          <h2 class="filters-title">Filters</h2>
+        </div>
+
+        <!-- Рейтинг -->
+        <div class="filter-group">
+          <h3 class="filter-group-title">Rating</h3>
+          <div class="filter-options">
+            <label class="filter-option">
+              <input 
+                type="checkbox" 
+                [checked]="selectedRatings().includes(5)"
+                (change)="toggleRating(5)"
+              >
+              <span class="checkbox-custom"></span>
+              <div class="stars-preview">
+                @for (star of [1,2,3,4,5]; track star) {
+                  <svg class="star" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                }
+              </div>
+              <span class="filter-label">5+ Stars</span>
+            </label>
+
+            <label class="filter-option">
+              <input 
+                type="checkbox" 
+                [checked]="selectedRatings().includes(4)"
+                (change)="toggleRating(4)"
+              >
+              <span class="checkbox-custom"></span>
+              <div class="stars-preview">
+                @for (star of [1,2,3,4]; track star) {
+                  <svg class="star" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                }
+                @for (star of [5]; track star) {
+                  <svg class="star empty" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                }
+              </div>
+              <span class="filter-label">4+ Stars</span>
+            </label>
+
+            <label class="filter-option">
+              <input 
+                type="checkbox" 
+                [checked]="selectedRatings().includes(3)"
+                (change)="toggleRating(3)"
+              >
+              <span class="checkbox-custom"></span>
+              <div class="stars-preview">
+                @for (star of [1,2,3]; track star) {
+                  <svg class="star" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                }
+                @for (star of [4,5]; track star) {
+                  <svg class="star empty" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                }
+              </div>
+              <span class="filter-label">3+ Stars</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Диапазон цен -->
+        <div class="filter-group">
+          <h3 class="filter-group-title">Price Range</h3>
+          <div class="price-range-inputs">
+            <div class="price-input-wrapper">
+              <label class="price-label">Min</label>
+              <div class="price-input-field">
+                <span class="dollar-sign">$</span>
+                <input 
+                  type="number" 
+                  [(ngModel)]="priceMin"
+                  min="0"
+                  class="price-input"
+                >
+              </div>
+            </div>
+            <span class="price-separator">-</span>
+            <div class="price-input-wrapper">
+              <label class="price-label">Max</label>
+              <div class="price-input-field">
+                <span class="dollar-sign">$</span>
+                <input 
+                  type="number" 
+                  [(ngModel)]="priceMax"
+                  min="0"
+                  class="price-input"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Кнопка сброса -->
+        <button class="btn-reset-filters" (click)="resetFilters()">
+          Reset Filters
+        </button>
+      </aside>
+
+      <!-- Мобильные фильтры (overlay) -->
+      @if (showFilters()) {
+        <div class="filters-overlay" (click)="toggleFilters()">
+          <aside class="filters-mobile" (click)="$event.stopPropagation()">
+            <div class="filters-mobile-header">
+              <h2>Filters</h2>
+              <button class="btn-close" (click)="toggleFilters()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Контент фильтров (такой же как в сайдбаре) -->
+            <div class="filters-mobile-content">
+              <!-- Рейтинг -->
+              <div class="filter-group">
+                <h3 class="filter-group-title">Rating</h3>
+                <div class="filter-options">
+                  @for (rating of [5, 4, 3]; track rating) {
+                    <label class="filter-option">
+                      <input 
+                        type="checkbox" 
+                        [checked]="selectedRatings().includes(rating)"
+                        (change)="toggleRating(rating)"
+                      >
+                      <span class="checkbox-custom"></span>
+                      <span class="filter-label">{{ rating }}+ Stars</span>
+                    </label>
+                  }
+                </div>
+              </div>
+
+              <!-- Цена -->
+              <div class="filter-group">
+                <h3 class="filter-group-title">Price Range</h3>
+                <div class="price-range-inputs">
+                  <div class="price-input-wrapper">
+                    <label class="price-label">Min</label>
+                    <div class="price-input-field">
+                      <span class="dollar-sign">$</span>
+                      <input type="number" [(ngModel)]="priceMin" min="0" class="price-input">
+                    </div>
+                  </div>
+                  <span class="price-separator">-</span>
+                  <div class="price-input-wrapper">
+                    <label class="price-label">Max</label>
+                    <div class="price-input-field">
+                      <span class="dollar-sign">$</span>
+                      <input type="number" [(ngModel)]="priceMax" min="0" class="price-input">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="filters-mobile-footer">
+              <button class="btn-apply-filters" (click)="toggleFilters()">Apply</button>
+              <button class="btn-reset-filters" (click)="resetFilters()">Reset</button>
+            </div>
+          </aside>
+        </div>
+      }
+
+      <!-- Правая колонка с контролами и товарами -->
+      <div class="products-wrapper">
+        <!-- Панель управления -->
+        <div class="controls-bar">
+          <!-- Кнопка фильтров (мобильная) -->
+          <button class="btn-filters-mobile" (click)="toggleFilters()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+            </svg>
+            Filters
+          </button>
+
+          <!-- Количество товаров -->
+          <span class="products-count">{{ filteredProducts().length }} products</span>
+
+          <!-- Сортировка -->
+          <div class="sort-wrapper">
+            <label class="sort-label">Sort by:</label>
+            <select [(ngModel)]="sortBy" class="sort-select">
+              <option value="name-asc">Name (A-Z)</option>
+              <option value="name-desc">Name (Z-A)</option>
+              <option value="price-asc">Price (Low to High)</option>
+              <option value="price-desc">Price (High to Low)</option>
+              <option value="rating">Rating</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Сетка товаров -->
+        <main class="products-main">
+        @if (isLoading()) {
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading products...</p>
+          </div>
+        } @else if (error()) {
+          <div class="error-state">
+            <p>{{ error() }}</p>
+            <button (click)="productsService.loadProducts()">Try Again</button>
+          </div>
+        } @else {
+          <div class="products-grid">
+            @for (product of filteredProducts(); track product.id) {
+              <article class="product-card">
+                <a [routerLink]="['/product', product.id]" class="product-image-wrapper">
+                  <img
+                    [src]="product.image"
+                    [alt]="product.name"
+                    class="product-image"
+                    loading="lazy"
+                  >
+                  <span class="price-badge">${{ product.price | number:'1.2-2' }}</span>
+
+                  <!-- Overlay при наведении -->
+                  <div class="product-overlay">
+                    <div class="overlay-content">
+                      <h3 class="overlay-name">{{ product.name }}</h3>
+                      
+                      <div class="overlay-rating">
+                        <div class="stars">
+                          @for (star of getStars(product.rating); track $index) {
+                            @if (star === 'full') {
+                              <svg class="star filled" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                              </svg>
+                            } @else if (star === 'half') {
+                              <svg class="star half" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24">
+                                <defs>
+                                  <linearGradient [id]="'half-overlay-' + product.id + '-' + $index">
+                                    <stop offset="50%" stop-color="#fbbf24"/>
+                                    <stop offset="50%" stop-color="transparent"/>
+                                  </linearGradient>
+                                </defs>
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" [attr.fill]="'url(#half-overlay-' + product.id + '-' + $index + ')'" stroke="#fbbf24" stroke-width="1"/>
+                              </svg>
+                            } @else {
+                              <svg class="star empty" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                              </svg>
+                            }
+                          }
+                        </div>
+                        <span class="rating-count">({{ product.reviews }})</span>
+                      </div>
+
+                      <div class="overlay-bottom">
+                        <span class="overlay-price">${{ product.price | number:'1.2-2' }}</span>
+                        <button class="btn-add-to-cart" (click)="$event.preventDefault(); $event.stopPropagation()">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+
+                <div class="product-details">
+                  <a [routerLink]="['/product', product.id]" class="product-name">
+                    {{ product.name }}
+                  </a>
+
+                  <div class="product-rating">
+                    <div class="stars">
+                      @for (star of getStars(product.rating); track $index) {
+                        @if (star === 'full') {
+                          <svg class="star filled" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                        } @else if (star === 'half') {
+                          <svg class="star half" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                            <defs>
+                              <linearGradient [id]="'half-' + product.id + '-' + $index">
+                                <stop offset="50%" stop-color="#fbbf24"/>
+                                <stop offset="50%" stop-color="transparent"/>
+                              </linearGradient>
+                            </defs>
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" [attr.fill]="'url(#half-' + product.id + '-' + $index + ')'" stroke="#fbbf24" stroke-width="1"/>
+                          </svg>
+                        } @else {
+                          <svg class="star empty" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                        }
+                      }
+                    </div>
+                    <span class="rating-count">({{ product.reviews }})</span>
+                  </div>
+                </div>
+              </article>
+            } @empty {
+              <div class="empty-state">
+                <h3>No Products Found</h3>
+                <p>Try adjusting your filters</p>
+                <button (click)="resetFilters()" class="btn-reset">Reset Filters</button>
+              </div>
+            }
+          </div>
+        }
+      </main>
+      </div>
+    </div>
+  </div>
+</div>

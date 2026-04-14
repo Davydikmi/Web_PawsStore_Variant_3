@@ -1,0 +1,154 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Orthopedic Memory Foam Pet Bed",
+      "price": 69.99,
+      "rating": 3.5,
+      "reviews": 124,
+      "image": "/assets/images/bed.jpg",
+      "shortDescription": "Luxurious memory foam pet bed with removable, machine-washable cover",
+      "fullDescription": "Luxurious memory foam pet bed with removable, machine-washable cover. Provides superior support for senior pets and those with joint issues. Water-resistant liner protects the foam core. Available in multiple sizes to fit all breeds.",
+      "highlights": [
+        "Size: Large (40 x 28 inches)",
+        "Foam Thickness: 4 inches",
+        "Cover Material: Microfiber",
+        "Water-resistant liner",
+        "Machine-washable cover"
+      ],
+      "specifications": {
+        "size": "Large (40 x 28 inches)",
+        "foamThickness": "4 inches",
+        "coverMaterial": "Microfiber",
+        "washing": "Machine Washable Cover",
+        "weight": "8 lbs"
+      },
+      "category": "accessory"
+    },
+    {
+      "id": 2,
+      "name": "Premium Dry Dog Food - Chicken & Rice",
+      "price": 54.99,
+      "rating": 4.5,
+      "reviews": 356,
+      "image": "/assets/images/leash.jpg",
+      "shortDescription": "Complete nutrition dry dog food with real chicken as first ingredient",
+      "fullDescription": "Premium dry dog food made with real chicken as the first ingredient. Formulated with whole grains, fruits, and vegetables for complete nutrition. No artificial colors, flavors, or preservatives. Suitable for adult dogs of all breeds.",
+      "highlights": [
+        "Real chicken as first ingredient",
+        "With whole grains and vegetables",
+        "No artificial colors or preservatives",
+        "For adult dogs of all breeds",
+        "Bag size: 30 lbs"
+      ],
+      "specifications": {
+        "size": "30 lbs",
+        "mainIngredient": "Chicken",
+        "lifeStage": "Adult",
+        "breedSize": "All Breeds",
+        "weight": "30 lbs"
+      },
+      "category": "food"
+    },
+    {
+      "id": 3,
+      "name": "Interactive Rubber Ball Toy",
+      "price": 12.99,
+      "rating": 4.5,
+      "reviews": 89,
+      "image": "/assets/images/ball.jpg",
+      "shortDescription": "Durable rubber ball for active play and fetch games",
+      "fullDescription": "Durable rubber ball designed for active play and fetch games. Made from non-toxic, natural rubber that's safe for pets. Bounces unpredictably to keep your pet engaged. Suitable for medium to large dogs.",
+      "highlights": [
+        "Made from natural rubber",
+        "Non-toxic and safe",
+        "Unpredictable bounce pattern",
+        "For medium to large dogs",
+        "Diameter: 3 inches"
+      ],
+      "specifications": {
+        "size": "3 inches diameter",
+        "material": "Natural Rubber",
+        "weight": "0.5 lbs",
+        "recommendedFor": "Medium to Large Dogs",
+        "color": "Blue"
+      },
+      "category": "toy"
+    },
+    {
+      "id": 4,
+      "name": "Stainless Steel Dog Bowl Set",
+      "price": 29.99,
+      "rating": 4.7,
+      "reviews": 201,
+      "image": "/assets/images/steel bowl.jpg",
+      "shortDescription": "Set of 2 stainless steel bowls with non-slip base",
+      "fullDescription": "Premium stainless steel bowl set includes 2 bowls for food and water. Features non-slip rubber base to prevent sliding. Dishwasher safe and rust-resistant. Perfect for dogs of all sizes.",
+      "highlights": [
+        "Set of 2 bowls",
+        "Stainless steel construction",
+        "Non-slip rubber base",
+        "Dishwasher safe",
+        "Capacity: 32 oz each"
+      ],
+      "specifications": {
+        "size": "32 oz each",
+        "material": "Stainless Steel",
+        "weight": "2.5 lbs",
+        "dishwasherSafe": "Yes",
+        "quantity": "2 bowls"
+      },
+      "category": "accessory"
+    },
+    {
+      "id": 5,
+      "name": "Cat Scratching Post with Condo",
+      "price": 89.99,
+      "rating": 4.9,
+      "reviews": 143,
+      "image": "/assets/images/scratching post.jpg",
+      "shortDescription": "Multi-level scratching post with cozy condo and hanging toys",
+      "fullDescription": "Multi-functional cat tree featuring scratching posts, cozy condo, and hanging toys. Covered in soft plush fabric with natural sisal scratching posts. Stable base prevents tipping. Perfect for multiple cats.",
+      "highlights": [
+        "Multi-level design",
+        "Natural sisal scratching posts",
+        "Cozy condo included",
+        "Hanging toys included",
+        "Height: 52 inches"
+      ],
+      "specifications": {
+        "size": "52 inches height",
+        "material": "Plush Fabric & Sisal",
+        "weight": "35 lbs",
+        "maxCatWeight": "20 lbs per level",
+        "assembly": "Required"
+      },
+      "category": "accessory"
+    },
+    {
+      "id": 6,
+      "name": "Chicken Jerky Dog Treats",
+      "price": 18.99,
+      "rating": 4.6,
+      "reviews": 67,
+      "image": "/assets/images/travel cage.jpg",
+      "shortDescription": "All-natural chicken jerky treats for training and rewards",
+      "fullDescription": "All-natural chicken jerky treats made from 100% real chicken breast. Perfect for training and daily rewards. No grains, gluten, or artificial preservatives. Soft and chewy texture that dogs love.",
+      "highlights": [
+        "100% real chicken breast",
+        "No grains or gluten",
+        "Perfect for training",
+        "Soft and chewy texture",
+        "Bag size: 16 oz"
+      ],
+      "specifications": {
+        "size": "16 oz",
+        "mainIngredient": "Chicken Breast",
+        "weight": "1 lb",
+        "grainFree": "Yes",
+        "shelfLife": "18 months"
+      },
+      "category": "food"
+    }
+  ]
+}
