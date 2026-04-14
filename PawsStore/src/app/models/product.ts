@@ -19,6 +19,7 @@ export interface Product {
   rating: number;
   reviews: number;
   image: string;
+  images: string[];  /** Массив изображений для карусели */
   shortDescription: string;
   fullDescription: string;
   highlights: string[];  /** Ключевые особенности (буллеты для раздела "Key Highlights") */

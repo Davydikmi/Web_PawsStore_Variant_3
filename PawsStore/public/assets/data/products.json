@@ -4,17 +4,21 @@
       "id": 1,
       "name": "Orthopedic Memory Foam Pet Bed",
       "price": 69.99,
+      "oldPrice": null,
       "rating": 3.5,
       "reviews": 124,
       "image": "/assets/images/bed.jpg",
+      "images": [
+        "/assets/images/bed.jpg",
+        "/assets/images/bed.jpg",
+        "/assets/images/bed.jpg"
+      ],
       "shortDescription": "Luxurious memory foam pet bed with removable, machine-washable cover",
       "fullDescription": "Luxurious memory foam pet bed with removable, machine-washable cover. Provides superior support for senior pets and those with joint issues. Water-resistant liner protects the foam core. Available in multiple sizes to fit all breeds.",
       "highlights": [
         "Size: Large (40 x 28 inches)",
         "Foam Thickness: 4 inches",
-        "Cover Material: Microfiber",
-        "Water-resistant liner",
-        "Machine-washable cover"
+        "Cover Material: Microfiber"
       ],
       "specifications": {
         "size": "Large (40 x 28 inches)",
@@ -23,132 +27,152 @@
         "washing": "Machine Washable Cover",
         "weight": "8 lbs"
       },
-      "category": "accessory"
+      "category": "beds"
     },
     {
       "id": 2,
-      "name": "Premium Dry Dog Food - Chicken & Rice",
-      "price": 54.99,
-      "rating": 4.5,
-      "reviews": 356,
-      "image": "/assets/images/leash.jpg",
-      "shortDescription": "Complete nutrition dry dog food with real chicken as first ingredient",
-      "fullDescription": "Premium dry dog food made with real chicken as the first ingredient. Formulated with whole grains, fruits, and vegetables for complete nutrition. No artificial colors, flavors, or preservatives. Suitable for adult dogs of all breeds.",
+      "name": "Premium Stainless Steel Dog Bowl",
+      "price": 24.99,
+      "oldPrice": null,
+      "rating": 5.0,
+      "reviews": 201,
+      "image": "/assets/images/steel bowl.jpg",
+      "images": [
+        "/assets/images/steel bowl.jpg",
+        "/assets/images/steel bowl.jpg",
+        "/assets/images/steel bowl.jpg"
+      ],
+      "shortDescription": "Durable stainless steel dog bowl designed for medium to large breeds",
+      "fullDescription": "Durable stainless steel dog bowl designed for medium to large breeds. Non-slip rubber base prevents sliding and spillage. Dishwasher safe and rust-resistant for long-lasting use. Perfect for both food and water.",
       "highlights": [
-        "Real chicken as first ingredient",
-        "With whole grains and vegetables",
-        "No artificial colors or preservatives",
-        "For adult dogs of all breeds",
-        "Bag size: 30 lbs"
+        "Material: Stainless Steel",
+        "Capacity: 64 oz (1.9 L)",
+        "Diameter: 8.5 inches"
       ],
       "specifications": {
-        "size": "30 lbs",
-        "mainIngredient": "Chicken",
-        "lifeStage": "Adult",
-        "breedSize": "All Breeds",
-        "weight": "30 lbs"
+        "material": "Stainless Steel",
+        "capacity": "64 oz (1.9 L)",
+        "diameter": "8.5 inches",
+        "care": "Dishwasher Safe",
+        "weight": "1.2 lbs"
       },
-      "category": "food"
+      "category": "bowls"
     },
     {
       "id": 3,
-      "name": "Interactive Rubber Ball Toy",
-      "price": 12.99,
-      "rating": 4.5,
+      "name": "Interactive Rubber Chew Ball",
+      "price": 15.99,
+      "oldPrice": null,
+      "rating": 5.0,
       "reviews": 89,
       "image": "/assets/images/ball.jpg",
-      "shortDescription": "Durable rubber ball for active play and fetch games",
-      "fullDescription": "Durable rubber ball designed for active play and fetch games. Made from non-toxic, natural rubber that's safe for pets. Bounces unpredictably to keep your pet engaged. Suitable for medium to large dogs.",
+      "images": [
+        "/assets/images/ball.jpg",
+        "/assets/images/ball.jpg",
+        "/assets/images/ball.jpg"
+      ],
+      "shortDescription": "Durable rubber chew ball designed for aggressive chewers",
+      "fullDescription": "Durable rubber chew ball designed for aggressive chewers. Features textured surface for dental health and can be filled with treats for extended playtime. Bounces unpredictably for exciting fetch games. Non-toxic, BPA-free rubber material.",
       "highlights": [
-        "Made from natural rubber",
-        "Non-toxic and safe",
-        "Unpredictable bounce pattern",
-        "For medium to large dogs",
-        "Diameter: 3 inches"
+        "Diameter: 3.5 inches",
+        "Material: Natural Rubber",
+        "Treat Compartment: Yes"
       ],
       "specifications": {
-        "size": "3 inches diameter",
+        "diameter": "3.5 inches",
         "material": "Natural Rubber",
-        "weight": "0.5 lbs",
-        "recommendedFor": "Medium to Large Dogs",
-        "color": "Blue"
+        "treatCompartment": "Yes",
+        "safety": "BPA-Free, Non-Toxic",
+        "suitableFor": "All Dog Sizes"
       },
-      "category": "toy"
+      "category": "toys"
     },
     {
       "id": 4,
-      "name": "Stainless Steel Dog Bowl Set",
-      "price": 29.99,
-      "rating": 4.7,
-      "reviews": 201,
-      "image": "/assets/images/steel bowl.jpg",
-      "shortDescription": "Set of 2 stainless steel bowls with non-slip base",
-      "fullDescription": "Premium stainless steel bowl set includes 2 bowls for food and water. Features non-slip rubber base to prevent sliding. Dishwasher safe and rust-resistant. Perfect for dogs of all sizes.",
+      "name": "Multi-Level Cat Scratching Post",
+      "price": 89.99,
+      "oldPrice": null,
+      "rating": 4.5,
+      "reviews": 143,
+      "image": "/assets/images/scratching post.jpg",
+      "images": [
+        "/assets/images/scratching post.jpg",
+        "/assets/images/scratching post.jpg",
+        "/assets/images/scratching post.jpg"
+      ],
+      "shortDescription": "Three-tier cat scratching post with sisal rope wrapping and plush platforms",
+      "fullDescription": "Three-tier cat scratching post with sisal rope wrapping and plush platforms. Provides multiple levels for climbing, scratching, and resting. Sturdy base ensures stability during active play. Natural jute fibers satisfy your cat's scratching instincts.",
       "highlights": [
-        "Set of 2 bowls",
-        "Stainless steel construction",
-        "Non-slip rubber base",
-        "Dishwasher safe",
-        "Capacity: 32 oz each"
+        "Height: 38 inches",
+        "Base Dimensions: 20 x 20 inches",
+        "Material: Sisal Rope & Plush Fabric"
       ],
       "specifications": {
-        "size": "32 oz each",
-        "material": "Stainless Steel",
-        "weight": "2.5 lbs",
-        "dishwasherSafe": "Yes",
-        "quantity": "2 bowls"
+        "height": "38 inches",
+        "baseDimensions": "20 x 20 inches",
+        "material": "Sisal Rope & Plush Fabric",
+        "platforms": "3 Levels",
+        "weightCapacity": "Up to 25 lbs per platform"
       },
-      "category": "accessory"
+      "category": "toys"
     },
     {
       "id": 5,
-      "name": "Cat Scratching Post with Condo",
-      "price": 89.99,
-      "rating": 4.9,
-      "reviews": 143,
-      "image": "/assets/images/scratching post.jpg",
-      "shortDescription": "Multi-level scratching post with cozy condo and hanging toys",
-      "fullDescription": "Multi-functional cat tree featuring scratching posts, cozy condo, and hanging toys. Covered in soft plush fabric with natural sisal scratching posts. Stable base prevents tipping. Perfect for multiple cats.",
+      "name": "Reflective Nylon Dog Leash & Collar Set",
+      "price": 32.99,
+      "oldPrice": null,
+      "rating": 4.0,
+      "reviews": 67,
+      "image": "/assets/images/leash.jpg",
+      "images": [
+        "/assets/images/leash.jpg",
+        "/assets/images/leash.jpg",
+        "/assets/images/leash.jpg"
+      ],
+      "shortDescription": "High-visibility reflective dog leash and collar set perfect for evening walks",
+      "fullDescription": "High-visibility reflective dog leash and collar set perfect for evening walks. Durable nylon construction with reinforced stitching. Quick-release buckle and adjustable sizing for a perfect fit. Includes sturdy metal D-ring for tag attachment.",
       "highlights": [
-        "Multi-level design",
-        "Natural sisal scratching posts",
-        "Cozy condo included",
-        "Hanging toys included",
-        "Height: 52 inches"
+        "Leash Length: 6 feet",
+        "Material: Nylon with Reflective Stitching",
+        "Collar Size: Adjustable 14-20 inches"
       ],
       "specifications": {
-        "size": "52 inches height",
-        "material": "Plush Fabric & Sisal",
-        "weight": "35 lbs",
-        "maxCatWeight": "20 lbs per level",
-        "assembly": "Required"
+        "leashLength": "6 feet",
+        "material": "Nylon with Reflective Stitching",
+        "collarSize": "Adjustable 14-20 inches",
+        "hardware": "Metal D-ring & Clasp",
+        "suitableFor": "Medium to Large Dogs"
       },
-      "category": "accessory"
+      "category": "leashes"
     },
     {
       "id": 6,
-      "name": "Chicken Jerky Dog Treats",
-      "price": 18.99,
-      "rating": 4.6,
-      "reviews": 67,
+      "name": "Airline-Approved Pet Travel Carrier",
+      "price": 54.99,
+      "oldPrice": null,
+      "rating": 4.0,
+      "reviews": 4,
       "image": "/assets/images/travel cage.jpg",
-      "shortDescription": "All-natural chicken jerky treats for training and rewards",
-      "fullDescription": "All-natural chicken jerky treats made from 100% real chicken breast. Perfect for training and daily rewards. No grains, gluten, or artificial preservatives. Soft and chewy texture that dogs love.",
+      "images": [
+        "/assets/images/travel cage.jpg",
+        "/assets/images/travel cage.jpg",
+        "/assets/images/travel cage.jpg"
+      ],
+      "shortDescription": "Soft-sided pet carrier approved for airline cabin use",
+      "fullDescription": "Soft-sided pet carrier approved for airline cabin use. Features mesh panels for ventilation, padded shoulder strap, and collapsible design for easy storage. Interior fleece pad provides comfort. Meets TSA requirements for in-cabin pet travel.",
       "highlights": [
-        "100% real chicken breast",
-        "No grains or gluten",
-        "Perfect for training",
-        "Soft and chewy texture",
-        "Bag size: 16 oz"
+        "Dimensions: 18 x 11 x 11 inches",
+        "Material: Polyester with Mesh Panels",
+        "Weight Limit: Up to 15 lbs"
       ],
       "specifications": {
-        "size": "16 oz",
-        "mainIngredient": "Chicken Breast",
-        "weight": "1 lb",
-        "grainFree": "Yes",
-        "shelfLife": "18 months"
+        "dimensions": "18 x 11 x 11 inches",
+        "material": "Polyester with Mesh Panels",
+        "weightLimit": "Up to 15 lbs",
+        "airlineApproved": "Yes (TSA Compliant)",
+        "features": "Collapsible, Padded Strap"
       },
-      "category": "food"
+      "category": "travel"
     }
   ]
 }

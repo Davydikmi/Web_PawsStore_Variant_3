@@ -19,7 +19,6 @@ export class ProductsService {
   readonly error = this.errorSignal.asReadonly();
 
   async loadProducts(): Promise<void> {
-    // Загружаем продукты только в браузере
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }

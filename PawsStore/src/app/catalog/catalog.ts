@@ -16,14 +16,17 @@ export class CatalogComponent implements OnInit {
   public productsService = inject(ProductsService);
 
   ngOnInit(): void {
-    this.productsService.loadProducts();
+    // Загружаем продукты только если они еще не загружены
+    if (this.productsService.productsList().length === 0) {
+      this.productsService.loadProducts();
+    }
   }
 
   // Фильтры
   showFilters = signal(false); // Для мобильного
   selectedRatings = signal<number[]>([]);
   priceMin = signal<number>(0);
-  priceMax = signal<number>(200);
+  priceMax = signal<number>(1000);
   sortBy = signal('name-asc');
 
   filteredProducts = computed(() => {
