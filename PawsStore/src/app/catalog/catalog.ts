@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductsService } from '../services/products.service';
+import { CartService } from '../services/cart.service';
 import { Product } from '../models/product';
 
 @Component({
@@ -14,6 +15,7 @@ import { Product } from '../models/product';
 })
 export class CatalogComponent implements OnInit {
   public productsService = inject(ProductsService);
+  public cartService = inject(CartService);
 
   ngOnInit(): void {
     // Загружаем продукты только если они еще не загружены
@@ -108,5 +110,9 @@ export class CatalogComponent implements OnInit {
     }
     
     return stars;
+  }
+
+  addToCart(productId: number): void {
+    this.cartService.addItem(productId);
   }
 }

@@ -2,6 +2,7 @@ import { Component, inject, signal, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductsService } from '../services/products.service';
+import { CartService } from '../services/cart.service';
 import { Product } from '../models/product';
 
 @Component({
@@ -15,6 +16,7 @@ export class ProductPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private productsService = inject(ProductsService);
+  public cartService = inject(CartService);
 
   product = signal<Product | null>(null);
   quantity = signal(1);
@@ -72,6 +74,15 @@ export class ProductPageComponent implements OnInit {
 
   goToImage(index: number): void {
     this.currentImageIndex.set(index);
+  }
+
+  addToCart(): void {
+    const product = this.product();
+    if (!product) return;
+    
+    for (let i = 0; i < this.quantity(); i++) {
+      this.cartService.addItem(product.id);
+    }
   }
 
   @HostListener('document:keydown.arrowleft')

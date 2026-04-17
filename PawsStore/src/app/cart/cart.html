@@ -1,1 +1,221 @@
-<p>cart works!</p>
+<div class="cart-page">
+  <div class="container">
+    <!-- Заголовок -->
+    <div class="cart-header">
+      <div>
+        <h1 class="cart-title">Shopping Bag</h1>
+        @if (!cartService.isEmpty()) {
+          <p class="cart-subtitle">{{ cartService.itemCount() }} item{{ cartService.itemCount() > 1 ? 's' : '' }} ready for checkout</p>
+        }
+      </div>
+
+      <!-- Прогресс-бар шагов -->
+      <div class="checkout-steps">
+        <div class="step active">
+          <div class="step-number">1</div>
+          <span class="step-label">Cart</span>
+        </div>
+        <svg class="step-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+        <div class="step">
+          <div class="step-number">2</div>
+          <span class="step-label">Checkout</span>
+        </div>
+        <svg class="step-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+        <div class="step">
+          <div class="step-number">3</div>
+          <span class="step-label">Complete</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Баннер бесплатной доставки -->
+    @if (!cartService.isEmpty()) {
+      <div class="shipping-banner" [class.qualified]="cartService.subtotal() >= 50">
+        <div class="shipping-info">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12H2m0 0l3-3m-3 3 3 3m13-3h-6m0 0l3-3m-3 3 3 3"/>
+          </svg>
+          <span>Free shipping on orders over <strong>$50</strong></span>
+        </div>
+        @if (cartService.subtotal() >= 50) {
+          <span class="qualified-badge">✓ Qualified!</span>
+        }
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (cartService.isEmpty()) {
+      <div class="empty-state">
+        <div class="empty-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+        </div>
+        <h2 class="empty-title">Your cart is empty</h2>
+        <p class="empty-text">Discover amazing products for your furry friends!</p>
+        <a [routerLink]="['/']" class="btn-start-shopping">
+          Start Shopping
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </a>
+      </div>
+    } @else {
+      <!-- Содержимое корзины -->
+      <div class="cart-content">
+        <!-- Список товаров -->
+        <div class="cart-items">
+          @for (item of cartService.items(); track item.productId) {
+            <div class="cart-item">
+              <a [routerLink]="['/product', item.productId]" class="item-image-wrapper">
+                <img [src]="item.image" [alt]="item.name" class="item-image">
+              </a>
+
+              <div class="item-details">
+                <div class="item-info">
+                  <a [routerLink]="['/product', item.productId]" class="item-name">{{ item.name }}</a>
+                  <p class="item-category">{{ item.category }}</p>
+                </div>
+
+                <div class="item-quantity">
+                  <button class="qty-btn" (click)="cartService.decrement(item.productId)" [disabled]="item.quantity <= 1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </button>
+                  <span class="qty-value">{{ item.quantity }}</span>
+                  <button class="qty-btn" (click)="cartService.increment(item.productId)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="item-price-section">
+                  <div class="item-price">
+                    <span class="price-value">${{ item.price * item.quantity | number:'1.2-2' }}</span>
+                    <span class="price-each">${{ item.price | number:'1.2-2' }} each</span>
+                  </div>
+                  <button class="btn-remove" (click)="cartService.removeItem(item.productId)" aria-label="Remove item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+          <div class="summary-header">
+            <h2 class="summary-title">Order Summary</h2>
+            <p class="summary-count">{{ cartService.itemCount() }} item{{ cartService.itemCount() > 1 ? 's' : '' }} in your bag</p>
+          </div>
+
+          <div class="summary-content">
+            <!-- Промокод -->
+            <div class="promo-section">
+              <label class="promo-label">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                  <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                </svg>
+                Promo Code
+              </label>
+              <div class="promo-input-group">
+                <input
+                  type="text"
+                  [(ngModel)]="promoInput"
+                  placeholder="Enter code"
+                  class="promo-input"
+                  [disabled]="!!cartService.promoCode()"
+                >
+                @if (cartService.promoCode()) {
+                  <button class="btn-clear-promo" (click)="cartService.clearPromoCode(); promoInput = ''">✕</button>
+                }
+                <button class="btn-apply-promo" (click)="cartService.applyPromoCode(promoInput)" [disabled]="!!cartService.promoCode()">Apply</button>
+              </div>
+              @if (cartService.promoError()) {
+                <p class="promo-error">{{ cartService.promoError() }}</p>
+              }
+              @if (cartService.promoCode()) {
+                <p class="promo-success">✓ Promo code SAVE10 applied!</p>
+              }
+            </div>
+
+            <!-- Итоги -->
+            <div class="totals">
+              <div class="total-row">
+                <span class="total-label">Subtotal</span>
+                <span class="total-value">${{ cartService.subtotal() | number:'1.2-2' }}</span>
+              </div>
+              <div class="total-row">
+                <span class="total-label">Tax (8%)</span>
+                <span class="total-value">${{ cartService.tax() | number:'1.2-2' }}</span>
+              </div>
+              @if (cartService.discount() > 0) {
+                <div class="total-row discount">
+                  <span class="total-label">Discount (10%)</span>
+                  <span class="total-value">-${{ cartService.discount() | number:'1.2-2' }}</span>
+                </div>
+              }
+              <div class="total-row grand-total">
+                <span class="total-label">Total</span>
+                <span class="total-value">${{ cartService.total() | number:'1.2-2' }}</span>
+              </div>
+            </div>
+
+            <!-- Доставка и адрес -->
+            <div class="delivery-info">
+              <div class="info-card delivery">
+                <div class="info-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <div class="info-text">
+                  <p class="info-title">Delivery Time</p>
+                  <p class="info-value">3-5 business days</p>
+                </div>
+              </div>
+              <div class="info-card shipping">
+                <div class="info-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
+                <div class="info-text">
+                  <p class="info-title">Shipping To</p>
+                  <p class="info-value">123 Main Street, NY 10001</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Кнопка оформления -->
+            <button class="btn-checkout">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                <line x1="1" y1="10" x2="23" y2="10"></line>
+              </svg>
+              Proceed to Checkout
+            </button>
+
+            <a [routerLink]="['/']" class="btn-continue">← Continue Shopping</a>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

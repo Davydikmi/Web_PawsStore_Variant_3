@@ -141,18 +141,25 @@
 }
 
 // Cart badge
+.cart-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .cart-badge {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  min-width: $spacing-4;
-  height: $spacing-4;
-  padding: 0 $spacing-1;
-  background: $primary-500;
-  color: $text-white;
-  font-size: $font-size-xs;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: $primary;
+  color: $white;
+  font-size: 10px;
   font-weight: $font-weight-semibold;
-  border-radius: $radius-lg;
+  border-radius: $radius-full;
   display: flex;
   align-items: center;
   justify-content: center;

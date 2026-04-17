@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.scss'
 })
 export class HeaderComponent {
+  public cartService = inject(CartService);
 
   isMobileMenuOpen = signal(false);
   
