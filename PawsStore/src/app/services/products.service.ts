@@ -44,4 +44,10 @@ export class ProductsService {
   getProductById(id: number): Product | undefined {
     return this.productsSignal().find(p => p.id === id);
   }
+
+  getRelatedProducts(category: string, excludeId: number, limit: number = 4): Product[] {
+    return this.productsSignal()
+      .filter(p => p.category === category && p.id !== excludeId)
+      .slice(0, limit);
+  }
 }

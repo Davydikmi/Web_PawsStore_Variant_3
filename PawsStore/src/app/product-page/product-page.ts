@@ -19,37 +19,51 @@ export class ProductPageComponent implements OnInit {
   public cartService = inject(CartService);
 
   product = signal<Product | null>(null);
+  relatedProducts = signal<Product[]>([]);
   quantity = signal(1);
   isLoading = signal(true);
   error = signal<string | null>(null);
   currentImageIndex = signal(0);
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    
-    if (!id) {
-      this.error.set('Product not found');
-      this.isLoading.set(false);
-      return;
-    }
+    this.route.paramMap.subscribe(params => {
+      const id = Number(params.get('id'));
+      
+      if (!id) {
+        this.error.set('Product not found');
+        this.isLoading.set(false);
+        return;
+      }
 
-    const foundProduct = this.productsService.getProductById(id);
-    
-    if (foundProduct) {
-      this.product.set(foundProduct);
-    } else {
-      // Если продукт не найден, загружаем и пробуем снова
-      this.productsService.loadProducts().then(() => {
-        const retryProduct = this.productsService.getProductById(id);
-        if (retryProduct) {
-          this.product.set(retryProduct);
-        } else {
-          this.error.set('Product not found');
-        }
-      });
-    }
-    
-    this.isLoading.set(false);
+      const foundProduct = this.productsService.getProductById(id);
+      
+      if (foundProduct) {
+        this.product.set(foundProduct);
+        this.loadRelatedProducts(foundProduct.category, foundProduct.id);
+        this.currentImageIndex.set(0);
+        this.quantity.set(1);
+      } else {
+        // Если продукт не найден, загружаем и пробуем снова
+        this.productsService.loadProducts().then(() => {
+          const retryProduct = this.productsService.getProductById(id);
+          if (retryProduct) {
+            this.product.set(retryProduct);
+            this.loadRelatedProducts(retryProduct.category, retryProduct.id);
+            this.currentImageIndex.set(0);
+            this.quantity.set(1);
+          } else {
+            this.error.set('Product not found');
+          }
+        });
+      }
+      
+      this.isLoading.set(false);
+    });
+  }
+
+  private loadRelatedProducts(category: string, excludeId: number): void {
+    const related = this.productsService.getRelatedProducts(category, excludeId);
+    this.relatedProducts.set(related);
   }
 
   incrementQuantity(): void {
@@ -113,11 +127,11 @@ export class ProductPageComponent implements OnInit {
 
   getCategoryLabel(category: string): string {
     const labels: Record<string, string> = {
-      'food': 'Food',
+      'leashes': 'Leashes',
       'toy': 'Toys',
-      'accessory': 'Accessories',
+      'bowls': 'Bowls',
       'beds': 'Beds',
-      'furniture': 'Furniture'
+      'travel': 'Travel'
     };
     return labels[category] || category;
   }

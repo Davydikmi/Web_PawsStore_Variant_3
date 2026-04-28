@@ -73,9 +73,11 @@
         <div class="cart-items">
           @for (item of cartService.items(); track item.productId) {
             <div class="cart-item">
+
               <a [routerLink]="['/product', item.productId]" class="item-image-wrapper">
                 <img [src]="item.image" [alt]="item.name" class="item-image">
               </a>
+               
 
               <div class="item-details">
                 <div class="item-info">
