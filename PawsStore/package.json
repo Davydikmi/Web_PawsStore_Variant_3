@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:ghpages": "ng build --configuration production --base-href /Web_PawsStore_Variant_3/",
+    "postbuild:ghpages": "node ./scripts/create-ghpages-404.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:PawsStore": "node dist/PawsStore/server/server.mjs"
@@ -22,7 +24,8 @@
     "@angular/ssr": "^21.2.5",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "zone.js": "^0.16.1"
   },
   "devDependencies": {
     "@angular/build": "^21.2.5",
