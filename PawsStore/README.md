@@ -1,59 +1,61 @@
 # PawsStore
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.5.
+Интернет-магазин товаров для домашних животных на Angular 21 с серверным рендерингом (SSR). Каталог загружается из локального JSON-файла.
 
-## Development server
+## Требования
 
-To start a local development server, run:
+- Node.js 20.19+ (или 22.12+)
+- npm
 
-```bash
-ng serve
-```
+## Установка и запуск
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Откройте терминал в каталоге `PawsStore` и выполните:
 
 ```bash
-ng generate component component-name
+npm ci
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Откройте [http://localhost:4200](http://localhost:4200). Сервер разработки автоматически пересобирает приложение при изменениях.
+
+Если вы находитесь в корне репозитория, сначала перейдите в каталог проекта:
 
 ```bash
-ng generate --help
+cd PawsStore
 ```
 
-## Building
+На Windows можно использовать `cd PawsStore` в PowerShell или командной строке. Запускайте команды из этой папки: `package.json` и зависимости находятся именно здесь.
 
-To build the project run:
+Если `localhost:4200` не открывается, остановите старый сервер разработки (`Ctrl+C`) и запустите локальную версию Angular CLI из каталога `PawsStore`:
 
 ```bash
-ng build
+npm start -- --host 127.0.0.1 --port 4200
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Убедитесь, что в терминале появилась ссылка `http://127.0.0.1:4200/`, и откройте именно её. Если порт занят, выберите другой, например `4201`.
 
-## Running unit tests
+## Команды
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+| Команда | Описание |
+| --- | --- |
+| `npm start` | Запустить сервер разработки |
+| `npm run build` | Собрать production-версию приложения и SSR-сервер |
+| `npm run watch` | Пересобирать приложение при изменениях в режиме разработки |
+| `npm test` | Запустить модульные тесты |
+| `npm run serve:ssr:PawsStore` | Запустить собранное SSR-приложение на порту 4000 |
 
-```bash
-ng test
-```
+Для запуска SSR-сервера сначала выполните `npm run build`. Порт можно изменить с помощью переменной окружения `PORT` (по умолчанию `4000`).
 
-## Running end-to-end tests
+## Возможности
 
-For end-to-end (e2e) testing, run:
+- Просмотр каталога и карточек товаров
+- Фильтрация и сортировка товаров
+- Корзина с изменением количества товаров
+- Применение промокода `SAVE10`
+- Серверный рендеринг страниц
 
-```bash
-ng e2e
-```
+Данные каталога находятся в `public/assets/data/products.json`, изображения — в `public/assets/images/`.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Технологии
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Angular 21, TypeScript, RxJS, Express 5, Angular SSR, SCSS и Vitest.
