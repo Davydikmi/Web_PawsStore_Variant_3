@@ -1,0 +1,29 @@
+{
+  "name": "paws-store-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --watch src --ext ts --exec \"npm run build && npm start\"",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "prisma:generate": "prisma generate"
+  },
+  "dependencies": {
+    "@fastify/cors": "*",
+    "@fastify/helmet": "*",
+    "@fastify/jwt": "*",
+    "@prisma/client": "*",
+    "bcryptjs": "*",
+    "fastify": "*",
+    "ioredis": "*",
+    "jsonwebtoken": "*"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "*",
+    "@types/node": "*",
+    "nodemon": "*",
+    "prisma": "*",
+    "typescript": "*"
+  }
+}
