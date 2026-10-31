@@ -4,6 +4,8 @@ import Fastify, {
 } from 'fastify';
 import jwt from '@fastify/jwt';
 import { authRoutes } from './routes/auth.routes.js';
+import { cartRoutes } from './routes/cart.routes.js';
+import { productRoutes } from './routes/product.routes.js';
 
 export async function buildApp(
   options: FastifyServerOptions = {},
@@ -22,6 +24,8 @@ export async function buildApp(
   });
 
   await app.register(authRoutes, { prefix: '/api/auth' });
+  await app.register(cartRoutes, { prefix: '/api/cart' });
+  await app.register(productRoutes, { prefix: '/api/products' });
 
   return app;
 }
