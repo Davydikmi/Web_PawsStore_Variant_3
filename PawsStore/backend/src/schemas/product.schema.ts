@@ -23,3 +23,50 @@ export interface ListProductsQuery {
   sort_by?: 'price' | 'title';
   order?: 'asc' | 'desc';
 }
+
+const productBodyProperties = {
+  title: { type: 'string', minLength: 1, maxLength: 200 },
+  description: { type: 'string', minLength: 1 },
+  price: { type: 'number', minimum: 0 },
+  rating: { type: 'number', minimum: 0, maximum: 5 },
+  images: { type: 'array', items: { type: 'string' } },
+  stockQuantity: { type: 'integer', minimum: 0 },
+};
+
+export const createProductBodySchema = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['title', 'description', 'price'],
+  properties: productBodyProperties,
+};
+
+export const updateProductBodySchema = {
+  type: 'object',
+  additionalProperties: false,
+  minProperties: 1,
+  properties: productBodyProperties,
+};
+
+export const productIdParamsSchema = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['id'],
+  properties: {
+    id: { type: 'string', format: 'uuid' },
+  },
+};
+
+export interface CreateProductBody {
+  title: string;
+  description: string;
+  price: number;
+  rating?: number;
+  images?: string[];
+  stockQuantity?: number;
+}
+
+export type UpdateProductBody = Partial<CreateProductBody>;
+
+export interface ProductIdParams {
+  id: string;
+}

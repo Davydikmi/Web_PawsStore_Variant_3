@@ -1,21 +1,24 @@
-import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { listProductsHandler } from '../controllers/product.controller.js';
+import type { FastifyInstance } from 'fastify';
+import {
+  createProductHandler,
+  deleteProductHandler,
+  listProductsHandler,
+  updateProductHandler,
+} from '../controllers/product.controller.js';
 import { authenticate } from '../middleware/auth.middleware.js';
 import { requireRole } from '../middleware/role.middleware.js';
 import {
+  createProductBodySchema,
   listProductsQuerySchema,
+  productIdParamsSchema,
+  updateProductBodySchema,
+  type CreateProductBody,
   type ListProductsQuery,
+  type ProductIdParams,
+  type UpdateProductBody,
 } from '../schemas/product.schema.js';
 
 const adminOnly = { preHandler: [authenticate, requireRole('admin')] };
-
-// TODO: replace with the product controller once admin product endpoints are implemented.
-async function notImplemented(
-  _request: FastifyRequest,
-  reply: FastifyReply,
-): Promise<void> {
-  reply.code(501).send({ message: 'Admin product endpoints are not implemented yet' });
-}
 
 export async function productRoutes(app: FastifyInstance): Promise<void> {
   app.get<{ Querystring: ListProductsQuery }>(
@@ -24,7 +27,24 @@ export async function productRoutes(app: FastifyInstance): Promise<void> {
     listProductsHandler,
   );
 
-  app.post('/', adminOnly, notImplemented);
-  app.patch('/', adminOnly, notImplemented);
-  app.delete('/', adminOnly, notImplemented);
+  app.post<{ Body: CreateProductBody }>(
+    '/',
+    { ...adminOnly, schema: { body: createProductBodySchema } },
+    createProductHandler,
+  );
+
+  app.patch<{ Params: ProductIdParams; Body: UpdateProductBody }>(
+    '/:id',
+    {
+      ...adminOnly,
+      schema: { params: productIdParamsSchema, body: updateProductBodySchema },
+    },
+    updateProductHandler,
+  );
+
+  app.delete<{ Params: ProductIdParams }>(
+    '/:id',
+    { ...adminOnly, schema: { params: productIdParamsSchema } },
+    deleteProductHandler,
+  );
 }
