@@ -29,14 +29,14 @@ const productBodyProperties = {
   description: { type: 'string', minLength: 1 },
   price: { type: 'number', minimum: 0 },
   rating: { type: 'number', minimum: 0, maximum: 5 },
-  images: { type: 'array', items: { type: 'string' } },
+  images: { type: 'array', items: { type: 'string' }, minItems: 1 },
   stockQuantity: { type: 'integer', minimum: 0 },
 };
 
 export const createProductBodySchema = {
   type: 'object',
   additionalProperties: false,
-  required: ['title', 'description', 'price'],
+  required: ['title', 'description', 'price', 'images'],
   properties: productBodyProperties,
 };
 
@@ -61,7 +61,7 @@ export interface CreateProductBody {
   description: string;
   price: number;
   rating?: number;
-  images?: string[];
+  images: string[];
   stockQuantity?: number;
 }
 
