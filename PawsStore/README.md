@@ -1,59 +1,104 @@
-# PawsStore
+# PawsStore Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.5.
+Angular 21 с серверным рендерингом (SSR) и SCSS. Клиентская часть учебного магазина PawsStore: каталог, карточка товара, аутентификация, корзина и промокоды. Все данные загружаются из REST API, локального JSON-каталога больше нет.
 
-## Development server
+Общая инструкция по проекту и backend — в [корневом README](../README.md).
 
-To start a local development server, run:
+## Требования
 
-```bash
-ng serve
+- Node.js 20.19+ (или 22.12+)
+- npm
+- Запущенный backend на `http://localhost:3000` (см. `backend/docker-compose.yml`)
+
+## Запуск
+
+Сначала поднимите API:
+
+```powershell
+cd ../backend
+docker compose up --build
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Затем фронтенд:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```powershell
+cd PawsStore
+npm ci
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Приложение: <http://localhost:4200>. Dev-сервер автоматически пересобирает страницы при изменениях.
 
-```bash
-ng generate --help
+Если `localhost:4200` не открывается:
+
+```powershell
+npm start -- --host 127.0.0.1 --port 4200
 ```
 
-## Building
+## Адрес API
 
-To build the project run:
+Задаётся в `src/environments/environment.ts`:
 
-```bash
-ng build
+```ts
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:3000',
+};
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Для production-сборки используется `environment.production.ts` (значение нужно заменить при необходимости).
 
-## Running unit tests
+## Маршруты
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+| Путь | Доступ | Описание |
+|---|---|---|
+| `/` | все | каталог с поиском, фильтрами, сортировкой и пагинацией |
+| `/product/:id` | все | карточка товара, слайдер, related products |
+| `/login` | все | вход |
+| `/register` | все | регистрация |
+| `/cart` | только авторизованные | корзина и промокод |
 
-```bash
-ng test
+Неавторизованный переход в `/cart` перенаправляет на `/login?returnUrl=/cart`.
+
+## Возможности
+
+- каталог и фильтры работают через query-параметры API (без фильтрации в памяти);
+- поиск с debounce, фильтры по рейтингу/цене, сортировка, пагинация;
+- JWT хранится в `localStorage`, интерсептор добавляет `Authorization: Bearer`;
+- корзина хранится на сервере, итоги (`subtotal`, `discount`, `total`) приходят с API;
+- промокод `SAVE10` применяется через `POST /api/cart/apply-promo`;
+- SSR для каталога/карточки, корзина рендерится на клиенте.
+
+## Команды
+
+| Команда | Описание |
+|---|---|
+| `npm start` | dev-сервер |
+| `npm run build` | production-сборка + SSR |
+| `npm run watch` | сборка в watch-режиме |
+| `npm test` | unit-тесты (Vitest) |
+| `npm run serve:ssr:PawsStore` | запуск собранного SSR-сервера (порт 4000) |
+
+## Структура
+
+```
+src/app/
+  auth/           AuthService, storage, guard, interceptor, login/register
+  catalog/        каталог
+  product-page/   карточка товара
+  cart/           корзина
+  header/         шапка, состояние пользователя и счётчик корзины
+  services/       products.service, cart.service
+  models/         Product, ProductCategory
+src/environments/ apiUrl для dev/prod
 ```
 
-## Running end-to-end tests
+## Troubleshooting
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+| Проблема | Решение |
+|---|---|
+| Каталог пустой / ошибка загрузки | проверьте, что backend запущен на `http://localhost:3000` |
+| CORS-ошибка | в backend `.env` укажите `CORS_ORIGIN=http://localhost:4200` |
+| 401 при работе с корзиной | войдите заново — истёк JWT |
+| Порт 4200 занят | `npm start -- --port 4201` |
+| Нужно сменить API | поправьте `apiUrl` в `environment.ts` |
