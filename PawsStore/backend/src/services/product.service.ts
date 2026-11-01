@@ -10,7 +10,7 @@ export interface ProductFilters {
   maxPrice?: number;
   minRating?: number;
   category?: ProductCategory;
-  sortBy?: 'price' | 'title';
+  sortBy?: 'price' | 'title' | 'rating';
   order?: 'asc' | 'desc';
 }
 
@@ -83,7 +83,9 @@ export async function listProducts(filters: ProductFilters) {
       ? { price: sortOrder }
       : sortField === 'title'
         ? { title: sortOrder }
-        : { createdAt: sortOrder };
+        : sortField === 'rating'
+          ? { rating: sortOrder }
+          : { createdAt: sortOrder };
 
   const [totalItems, products] = await prisma.$transaction([
     prisma.product.count({ where }),

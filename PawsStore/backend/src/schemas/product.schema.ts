@@ -15,7 +15,7 @@ export const listProductsQuerySchema = {
     max_price: { type: 'number', minimum: 0 },
     min_rating: { type: 'number', minimum: 0, maximum: 5 },
     category: { type: 'string', enum: productCategories },
-    sort_by: { type: 'string', enum: ['price', 'title'] },
+    sort_by: { type: 'string', enum: ['price', 'title', 'rating'] },
     order: { type: 'string', enum: ['asc', 'desc'] },
   },
 };
@@ -28,7 +28,7 @@ export interface ListProductsQuery {
   max_price?: number;
   min_rating?: number;
   category?: ProductCategoryValue;
-  sort_by?: 'price' | 'title';
+  sort_by?: 'price' | 'title' | 'rating';
   order?: 'asc' | 'desc';
 }
 

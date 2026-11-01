@@ -12,7 +12,7 @@ export interface ProductsCacheParams {
   maxPrice?: number;
   minRating?: number;
   category?: string;
-  sortBy?: 'price' | 'title';
+  sortBy?: 'price' | 'title' | 'rating';
   order?: 'asc' | 'desc';
 }
 
