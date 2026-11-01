@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import {
   createProductHandler,
   deleteProductHandler,
+  getProductHandler,
   listProductsHandler,
   updateProductHandler,
 } from '../controllers/product.controller.js';
@@ -25,6 +26,12 @@ export async function productRoutes(app: FastifyInstance): Promise<void> {
     '/',
     { schema: { querystring: listProductsQuerySchema } },
     listProductsHandler,
+  );
+
+  app.get<{ Params: ProductIdParams }>(
+    '/:id',
+    { schema: { params: productIdParamsSchema } },
+    getProductHandler,
   );
 
   app.post<{ Body: CreateProductBody }>(

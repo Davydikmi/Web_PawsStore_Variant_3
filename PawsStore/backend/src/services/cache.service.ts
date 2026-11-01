@@ -11,6 +11,7 @@ export interface ProductsCacheParams {
   minPrice?: number;
   maxPrice?: number;
   minRating?: number;
+  category?: string;
   sortBy?: 'price' | 'title';
   order?: 'asc' | 'desc';
 }
@@ -35,6 +36,10 @@ export function buildProductsCacheKey(params: ProductsCacheParams): string {
 
   if (params.minRating !== undefined) {
     searchParams.set('min_rating', String(params.minRating));
+  }
+
+  if (params.category) {
+    searchParams.set('category', params.category);
   }
 
   if (params.sortBy) {
