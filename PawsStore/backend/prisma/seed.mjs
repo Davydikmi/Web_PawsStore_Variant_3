@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import bcrypt from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -7,7 +8,22 @@ const demoProducts = JSON.parse(
   readFileSync(new URL('./data/products.json', import.meta.url), 'utf8'),
 );
 
+const adminEmail = process.env.ADMIN_EMAIL ?? 'admin@pawsstore.local';
+const adminPassword = process.env.ADMIN_PASSWORD ?? 'admin12345';
+
 async function main() {
+  const passwordHash = await bcrypt.hash(adminPassword, 10);
+
+  await prisma.user.upsert({
+    where: { email: adminEmail },
+    update: { role: 'admin', passwordHash },
+    create: {
+      email: adminEmail,
+      passwordHash,
+      role: 'admin',
+    },
+  });
+
   await prisma.promoCode.upsert({
     where: { code: 'SAVE10' },
     update: { discountPercentage: 10, isActive: true, expiresAt: null },
@@ -31,7 +47,7 @@ async function main() {
   }
 
   console.log(
-    `Seeded promo code SAVE10 and ${demoProducts.length} demo products`,
+    `Seeded admin ${adminEmail}, promo code SAVE10 and ${demoProducts.length} demo products`,
   );
 }
 
