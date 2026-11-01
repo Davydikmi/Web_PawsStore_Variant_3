@@ -728,3 +728,55 @@
     color: $primary;
   }
 }
+
+// ===========================================
+// LOADING / ERROR
+// ===========================================
+
+.cart-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-4;
+  padding: $spacing-16 $spacing-4;
+  color: $text-muted;
+}
+
+.cart-loading .spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid $gray-200;
+  border-top-color: $primary;
+  border-radius: $radius-full;
+  animation: cart-spin 1s linear infinite;
+}
+
+@keyframes cart-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cart-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-4;
+  margin-bottom: $spacing-5;
+  padding: $spacing-3 $spacing-4;
+  color: $error;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: $radius-lg;
+
+  button {
+    flex-shrink: 0;
+    padding: $spacing-2 $spacing-4;
+    color: $white;
+    background: $error;
+    border: none;
+    border-radius: $radius-md;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+  }
+}

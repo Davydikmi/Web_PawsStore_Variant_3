@@ -66,9 +66,7 @@ export class ProductPageComponent implements OnInit {
     const product = this.product();
     if (!product) return;
 
-    for (let i = 0; i < this.quantity(); i++) {
-      this.cartService.addItem(product);
-    }
+    void this.cartService.addItem(product.id, this.quantity());
   }
 
   @HostListener('document:keydown.arrowleft')

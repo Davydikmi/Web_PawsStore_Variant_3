@@ -147,7 +147,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
   }
 
   addToCart(product: Product): void {
-    this.cartService.addItem(product);
+    void this.cartService.addItem(product.id);
   }
 
   private async loadCurrentPage(): Promise<void> {
