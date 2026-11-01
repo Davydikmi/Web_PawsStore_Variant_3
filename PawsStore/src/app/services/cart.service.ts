@@ -1,8 +1,8 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { ProductsService } from './products.service';
+import { Product } from '../models/product';
 
 export interface CartItem {
-  productId: number;
+  productId: string;
   name: string;
   price: number;
   image: string;
@@ -12,8 +12,6 @@ export interface CartItem {
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private productsService = inject(ProductsService);
-
   private itemsSignal = signal<CartItem[]>([]);
   readonly items = this.itemsSignal.asReadonly();
 
@@ -53,10 +51,8 @@ export class CartService {
   readonly isEmpty = computed(() => this.itemsSignal().length === 0);
 
   // Добавить товар
-  addItem(productId: number): void {
-    const product = this.productsService.getProductById(productId);
-    if (!product) return;
-
+  addItem(product: Product): void {
+    const productId = product.id;
     const existing = this.itemsSignal().find(item => item.productId === productId);
     if (existing) {
       this.itemsSignal.update(items =>
@@ -82,7 +78,7 @@ export class CartService {
   }
 
   // Удалить товар
-  removeItem(productId: number): void {
+  removeItem(productId: string): void {
     this.itemsSignal.update(items =>
       items.filter(item => item.productId !== productId)
     );
@@ -90,7 +86,7 @@ export class CartService {
   }
 
   // Обновить количество
-  updateQuantity(productId: number, quantity: number): void {
+  updateQuantity(productId: string, quantity: number): void {
     if (quantity <= 0) {
       this.removeItem(productId);
       return;
@@ -106,7 +102,7 @@ export class CartService {
   }
 
   // Увеличить количество
-  increment(productId: number): void {
+  increment(productId: string): void {
     this.itemsSignal.update(items =>
       items.map(item =>
         item.productId === productId
@@ -117,7 +113,7 @@ export class CartService {
   }
 
   // Уменьшить количество
-  decrement(productId: number): void {
+  decrement(productId: string): void {
     this.itemsSignal.update(items =>
       items.map(item =>
         item.productId === productId && item.quantity > 1

@@ -1,10 +1,17 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ProductsService } from '../services/products.service';
-import { CartService } from '../services/cart.service';
 import { Product } from '../models/product';
+import { CartService } from '../services/cart.service';
+import { ProductQuery, ProductsService } from '../services/products.service';
 
 @Component({
   selector: 'app-catalog',
@@ -13,16 +20,11 @@ import { Product } from '../models/product';
   templateUrl: './catalog.html',
   styleUrl: './catalog.scss'
 })
-export class CatalogComponent implements OnInit {
+export class CatalogComponent implements OnInit, OnDestroy {
   public productsService = inject(ProductsService);
   public cartService = inject(CartService);
 
-  ngOnInit(): void {
-    // Загружаем продукты только если они еще не загружены
-    if (this.productsService.productsList().length === 0) {
-      this.productsService.loadProducts();
-    }
-  }
+  readonly limit = 12;
 
   // Фильтры
   showFilters = signal(false); // Для мобильного
@@ -30,46 +32,41 @@ export class CatalogComponent implements OnInit {
   priceMin = signal<number>(0);
   priceMax = signal<number>(1000);
   sortBy = signal('name-asc');
+  searchTerm = signal('');
 
-  filteredProducts = computed(() => {
-    let result = [...this.productsService.productsList()];
+  // Пагинация
+  currentPage = signal(1);
+  readonly meta = this.productsService.meta;
+  readonly pageNumbers = computed(() => {
+    const total = this.meta().total_pages;
 
-    // Рейтинг
-    if (this.selectedRatings().length > 0) {
-      result = result.filter(p => 
-        this.selectedRatings().some(rating => p.rating >= rating)
-      );
+    if (total <= 0) {
+      return [];
     }
 
-    // Цена
-    result = result.filter(p => 
-      p.price >= this.priceMin() && p.price <= this.priceMax()
-    );
+    const current = Math.min(this.currentPage(), total);
+    const windowSize = 5;
+    let start = Math.max(1, current - Math.floor(windowSize / 2));
+    const end = Math.min(total, start + windowSize - 1);
+    start = Math.max(1, end - windowSize + 1);
 
-    // Сортировка
-    switch (this.sortBy()) {
-      case 'price-asc':
-        result.sort((a, b) => a.price - b.price);
-        break;
-      case 'price-desc':
-        result.sort((a, b) => b.price - a.price);
-        break;
-      case 'rating':
-        result.sort((a, b) => b.rating - a.rating);
-        break;
-      case 'name-asc':
-        result.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case 'name-desc':
-        result.sort((a, b) => b.name.localeCompare(a.name));
-        break;
-    }
-
-    return result;
+    return Array.from({ length: end - start + 1 }, (_, index) => start + index);
   });
 
-  isLoading = this.productsService.isLoading;
-  error = this.productsService.error;
+  readonly isLoading = this.productsService.isLoading;
+  readonly error = this.productsService.error;
+
+  private searchTimer?: ReturnType<typeof setTimeout>;
+
+  ngOnInit(): void {
+    void this.loadCurrentPage();
+  }
+
+  ngOnDestroy(): void {
+    if (this.searchTimer) {
+      clearTimeout(this.searchTimer);
+    }
+  }
 
   toggleFilters(): void {
     this.showFilters.update(v => !v);
@@ -82,14 +79,51 @@ export class CatalogComponent implements OnInit {
     } else {
       this.selectedRatings.set([...current, rating]);
     }
+    this.applyFilters();
+  }
+
+  onSearchInput(value: string): void {
+    this.searchTerm.set(value);
+
+    if (this.searchTimer) {
+      clearTimeout(this.searchTimer);
+    }
+
+    this.searchTimer = setTimeout(() => this.applyFilters(), 300);
+  }
+
+  applyFilters(): void {
+    this.currentPage.set(1);
+    void this.loadCurrentPage();
+  }
+
+  reload(): void {
+    void this.loadCurrentPage();
+  }
+
+  goToPage(page: number): void {
+    const totalPages = this.meta().total_pages;
+
+    if (page < 1 || page > totalPages || page === this.currentPage()) {
+      return;
+    }
+
+    this.currentPage.set(page);
+    void this.loadCurrentPage();
+
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   resetFilters(): void {
     this.selectedRatings.set([]);
     this.priceMin.set(0);
-    this.priceMax.set(200);
+    this.priceMax.set(1000);
     this.sortBy.set('name-asc');
+    this.searchTerm.set('');
     this.showFilters.set(false);
+    this.applyFilters();
   }
 
   // Отображение звезд у карточки товара
@@ -112,7 +146,34 @@ export class CatalogComponent implements OnInit {
     return stars;
   }
 
-  addToCart(productId: number): void {
-    this.cartService.addItem(productId);
+  addToCart(product: Product): void {
+    this.cartService.addItem(product);
+  }
+
+  private async loadCurrentPage(): Promise<void> {
+    await this.productsService.loadProducts(this.buildQuery());
+  }
+
+  private buildQuery(): ProductQuery {
+    const sorts: Record<string, { sortBy: 'price' | 'title' | 'rating'; order: 'asc' | 'desc' }> = {
+      'name-asc': { sortBy: 'title', order: 'asc' },
+      'name-desc': { sortBy: 'title', order: 'desc' },
+      'price-asc': { sortBy: 'price', order: 'asc' },
+      'price-desc': { sortBy: 'price', order: 'desc' },
+      'rating': { sortBy: 'rating', order: 'desc' },
+    };
+    const sort = sorts[this.sortBy()] ?? sorts['name-asc'];
+    const ratings = this.selectedRatings();
+
+    return {
+      page: this.currentPage(),
+      limit: this.limit,
+      search: this.searchTerm().trim() || undefined,
+      minPrice: this.priceMin() > 0 ? this.priceMin() : undefined,
+      maxPrice: this.priceMax() < 1000 ? this.priceMax() : undefined,
+      minRating: ratings.length > 0 ? Math.min(...ratings) : undefined,
+      sortBy: sort.sortBy,
+      order: sort.order,
+    };
   }
 }
