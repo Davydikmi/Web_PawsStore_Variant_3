@@ -1,9 +1,9 @@
 import { Component, inject, signal, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Product, ProductCategory } from '../models/product';
 import { ProductsService } from '../services/products.service';
 import { CartService } from '../services/cart.service';
-import { Product } from '../models/product';
 
 @Component({
   selector: 'app-product-page',
@@ -14,7 +14,6 @@ import { Product } from '../models/product';
 })
 export class ProductPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
   private productsService = inject(ProductsService);
   public cartService = inject(CartService);
 
@@ -27,43 +26,16 @@ export class ProductPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const id = Number(params.get('id'));
-      
+      const id = params.get('id');
+
       if (!id) {
         this.error.set('Product not found');
         this.isLoading.set(false);
         return;
       }
 
-      const foundProduct = this.productsService.getProductById(id);
-      
-      if (foundProduct) {
-        this.product.set(foundProduct);
-        this.loadRelatedProducts(foundProduct.category, foundProduct.id);
-        this.currentImageIndex.set(0);
-        this.quantity.set(1);
-      } else {
-        // Если продукт не найден, загружаем и пробуем снова
-        this.productsService.loadProducts().then(() => {
-          const retryProduct = this.productsService.getProductById(id);
-          if (retryProduct) {
-            this.product.set(retryProduct);
-            this.loadRelatedProducts(retryProduct.category, retryProduct.id);
-            this.currentImageIndex.set(0);
-            this.quantity.set(1);
-          } else {
-            this.error.set('Product not found');
-          }
-        });
-      }
-      
-      this.isLoading.set(false);
+      void this.loadProduct(id);
     });
-  }
-
-  private loadRelatedProducts(category: string, excludeId: number): void {
-    const related = this.productsService.getRelatedProducts(category, excludeId);
-    this.relatedProducts.set(related);
   }
 
   incrementQuantity(): void {
@@ -93,9 +65,9 @@ export class ProductPageComponent implements OnInit {
   addToCart(): void {
     const product = this.product();
     if (!product) return;
-    
+
     for (let i = 0; i < this.quantity(); i++) {
-      this.cartService.addItem(product.id);
+      this.cartService.addItem(product);
     }
   }
 
@@ -127,11 +99,11 @@ export class ProductPageComponent implements OnInit {
 
   getCategoryLabel(category: string): string {
     const labels: Record<string, string> = {
-      'leashes': 'Leashes',
-      'toy': 'Toys',
-      'bowls': 'Bowls',
-      'beds': 'Beds',
-      'travel': 'Travel'
+      food: 'Food',
+      toy: 'Toys',
+      accessory: 'Accessories',
+      beds: 'Beds',
+      furniture: 'Furniture'
     };
     return labels[category] || category;
   }
@@ -164,6 +136,10 @@ export class ProductPageComponent implements OnInit {
     };
 
     for (const [key, value] of Object.entries(product.specifications)) {
+      if (value === undefined) {
+        continue;
+      }
+
       const label = specLabels[key] || key;
       const displayValue = typeof value === 'boolean' 
         ? (value ? 'Yes' : 'No')
@@ -173,5 +149,36 @@ export class ProductPageComponent implements OnInit {
     }
 
     return specs;
+  }
+
+  private async loadProduct(id: string): Promise<void> {
+    this.isLoading.set(true);
+    this.error.set(null);
+    this.product.set(null);
+    this.relatedProducts.set([]);
+
+    try {
+      const product = await this.productsService.loadProduct(id);
+
+      if (!product) {
+        this.error.set('Product not found');
+        return;
+      }
+
+      this.product.set(product);
+      this.currentImageIndex.set(0);
+      this.quantity.set(1);
+      this.loadRelatedProducts(product.category, product.id);
+    } catch (error) {
+      console.error('Failed to load product:', error);
+      this.error.set('Failed to load product. Please try again.');
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  private async loadRelatedProducts(category: ProductCategory, excludeId: string): Promise<void> {
+    const related = await this.productsService.loadRelatedProducts(category, excludeId);
+    this.relatedProducts.set(related);
   }
 }

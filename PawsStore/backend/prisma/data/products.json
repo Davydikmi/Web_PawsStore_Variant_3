@@ -1,0 +1,176 @@
+[
+    {
+        "id":  "11111111-1111-4111-8111-111111111101",
+        "title":  "Orthopedic Memory Foam Pet Bed",
+        "description":  "Luxurious memory foam pet bed with removable, machine-washable cover. Provides superior support for senior pets and those with joint issues. Water-resistant liner protects the foam core. Available in multiple sizes to fit all breeds.",
+        "shortDescription":  "Luxurious memory foam pet bed with removable, machine-washable cover",
+        "price":  69.99,
+        "rating":  3.5,
+        "reviews":  124,
+        "images":  [
+                       "/assets/images/bed.jpg",
+                       "/assets/images/bed.jpg",
+                       "/assets/images/bed.jpg"
+                   ],
+        "highlights":  [
+                           "Size: Large (40 x 28 inches)",
+                           "Foam Thickness: 4 inches",
+                           "Cover Material: Microfiber"
+                       ],
+        "specifications":  {
+                               "size":  "Large (40 x 28 inches)",
+                               "foamThickness":  "4 inches",
+                               "coverMaterial":  "Microfiber",
+                               "washing":  "Machine Washable Cover",
+                               "weight":  "8 lbs"
+                           },
+        "category":  "beds",
+        "stockQuantity":  25,
+        "createdAt":  "2026-01-01T10:00:00.000Z"
+    },
+    {
+        "id":  "11111111-1111-4111-8111-111111111102",
+        "title":  "Premium Stainless Steel Dog Bowl",
+        "description":  "Durable stainless steel dog bowl designed for medium to large breeds. Non-slip rubber base prevents sliding and spillage. Dishwasher safe and rust-resistant for long-lasting use. Perfect for both food and water.",
+        "shortDescription":  "Durable stainless steel dog bowl designed for medium to large breeds",
+        "price":  24.99,
+        "rating":  5,
+        "reviews":  201,
+        "images":  [
+                       "/assets/images/steel bowl.jpg",
+                       "/assets/images/steel bowl.jpg",
+                       "/assets/images/steel bowl.jpg"
+                   ],
+        "highlights":  [
+                           "Material: Stainless Steel",
+                           "Capacity: 64 oz (1.9 L)",
+                           "Diameter: 8.5 inches"
+                       ],
+        "specifications":  {
+                               "material":  "Stainless Steel",
+                               "capacity":  "64 oz (1.9 L)",
+                               "diameter":  "8.5 inches",
+                               "care":  "Dishwasher Safe",
+                               "weight":  "1.2 lbs"
+                           },
+        "category":  "food",
+        "stockQuantity":  25,
+        "createdAt":  "2026-01-02T10:00:00.000Z"
+    },
+    {
+        "id":  "11111111-1111-4111-8111-111111111103",
+        "title":  "Interactive Rubber Chew Ball",
+        "description":  "Durable rubber chew ball designed for aggressive chewers. Features textured surface for dental health and can be filled with treats for extended playtime. Bounces unpredictably for exciting fetch games. Non-toxic, BPA-free rubber material.",
+        "shortDescription":  "Durable rubber chew ball designed for aggressive chewers",
+        "price":  15.99,
+        "rating":  5,
+        "reviews":  89,
+        "images":  [
+                       "/assets/images/ball.jpg",
+                       "/assets/images/ball.jpg",
+                       "/assets/images/ball.jpg"
+                   ],
+        "highlights":  [
+                           "Diameter: 3.5 inches",
+                           "Material: Natural Rubber",
+                           "Treat Compartment: Yes"
+                       ],
+        "specifications":  {
+                               "diameter":  "3.5 inches",
+                               "material":  "Natural Rubber",
+                               "treatCompartment":  "Yes",
+                               "safety":  "BPA-Free, Non-Toxic",
+                               "suitableFor":  "All Dog Sizes"
+                           },
+        "category":  "toy",
+        "stockQuantity":  25,
+        "createdAt":  "2026-01-03T10:00:00.000Z"
+    },
+    {
+        "id":  "11111111-1111-4111-8111-111111111104",
+        "title":  "Multi-Level Cat Scratching Post",
+        "description":  "Three-tier cat scratching post with sisal rope wrapping and plush platforms. Provides multiple levels for climbing, scratching, and resting. Sturdy base ensures stability during active play. Natural jute fibers satisfy your cat\u0027s scratching instincts.",
+        "shortDescription":  "Three-tier cat scratching post with sisal rope wrapping and plush platforms",
+        "price":  89.99,
+        "rating":  4.5,
+        "reviews":  143,
+        "images":  [
+                       "/assets/images/scratching post.jpg",
+                       "/assets/images/scratching post.jpg",
+                       "/assets/images/scratching post.jpg"
+                   ],
+        "highlights":  [
+                           "Height: 38 inches",
+                           "Base Dimensions: 20 x 20 inches",
+                           "Material: Sisal Rope \u0026 Plush Fabric"
+                       ],
+        "specifications":  {
+                               "height":  "38 inches",
+                               "baseDimensions":  "20 x 20 inches",
+                               "material":  "Sisal Rope \u0026 Plush Fabric",
+                               "platforms":  "3 Levels",
+                               "weightCapacity":  "Up to 25 lbs per platform"
+                           },
+        "category":  "toy",
+        "stockQuantity":  25,
+        "createdAt":  "2026-01-04T10:00:00.000Z"
+    },
+    {
+        "id":  "11111111-1111-4111-8111-111111111105",
+        "title":  "Reflective Nylon Dog Leash \u0026 Collar Set",
+        "description":  "High-visibility reflective dog leash and collar set perfect for evening walks. Durable nylon construction with reinforced stitching. Quick-release buckle and adjustable sizing for a perfect fit. Includes sturdy metal D-ring for tag attachment.",
+        "shortDescription":  "High-visibility reflective dog leash and collar set perfect for evening walks",
+        "price":  32.99,
+        "rating":  4,
+        "reviews":  67,
+        "images":  [
+                       "/assets/images/leash.jpg",
+                       "/assets/images/leash.jpg",
+                       "/assets/images/leash.jpg"
+                   ],
+        "highlights":  [
+                           "Leash Length: 6 feet",
+                           "Material: Nylon with Reflective Stitching",
+                           "Collar Size: Adjustable 14-20 inches"
+                       ],
+        "specifications":  {
+                               "leashLength":  "6 feet",
+                               "material":  "Nylon with Reflective Stitching",
+                               "collarSize":  "Adjustable 14-20 inches",
+                               "hardware":  "Metal D-ring \u0026 Clasp",
+                               "suitableFor":  "Medium to Large Dogs"
+                           },
+        "category":  "accessory",
+        "stockQuantity":  25,
+        "createdAt":  "2026-01-05T10:00:00.000Z"
+    },
+    {
+        "id":  "11111111-1111-4111-8111-111111111106",
+        "title":  "Airline-Approved Pet Travel Carrier",
+        "description":  "Soft-sided pet carrier approved for airline cabin use. Features mesh panels for ventilation, padded shoulder strap, and collapsible design for easy storage. Interior fleece pad provides comfort. Meets TSA requirements for in-cabin pet travel.",
+        "shortDescription":  "Soft-sided pet carrier approved for airline cabin use",
+        "price":  54.99,
+        "rating":  4,
+        "reviews":  4,
+        "images":  [
+                       "/assets/images/travel cage.jpg",
+                       "/assets/images/travel cage.jpg",
+                       "/assets/images/travel cage.jpg"
+                   ],
+        "highlights":  [
+                           "Dimensions: 18 x 11 x 11 inches",
+                           "Material: Polyester with Mesh Panels",
+                           "Weight Limit: Up to 15 lbs"
+                       ],
+        "specifications":  {
+                               "dimensions":  "18 x 11 x 11 inches",
+                               "material":  "Polyester with Mesh Panels",
+                               "weightLimit":  "Up to 15 lbs",
+                               "airlineApproved":  "Yes (TSA Compliant)",
+                               "features":  "Collapsible, Padded Strap"
+                           },
+        "category":  "accessory",
+        "stockQuantity":  25,
+        "createdAt":  "2026-01-06T10:00:00.000Z"
+    }
+]

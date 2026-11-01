@@ -764,3 +764,96 @@
     background: $primary-hover;
   }
 }
+
+// ===========================================
+// SEARCH
+// ===========================================
+
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1 1 220px;
+  max-width: 320px;
+  min-width: 180px;
+
+  @media (max-width: 767px) {
+    order: -1;
+    flex-basis: 100%;
+    max-width: none;
+  }
+}
+
+.search-icon {
+  position: absolute;
+  left: $spacing-3;
+  color: $gray-400;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: $spacing-2 $spacing-4 $spacing-2 $spacing-10;
+  font-size: $font-size-sm;
+  font-family: $font-family-base;
+  color: $text-primary;
+  background: $gray-50;
+  border: 1px solid $gray-300;
+  border-radius: $radius-lg;
+  transition: border-color $transition-fast, box-shadow $transition-fast, background $transition-fast;
+
+  &:focus {
+    outline: none;
+    background: $white;
+    border-color: $primary-500;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+  }
+}
+
+// ===========================================
+// PAGINATION
+// ===========================================
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+  margin-top: $spacing-8;
+}
+
+.page-btn {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 $spacing-3;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  font-family: $font-family-base;
+  color: $text-secondary;
+  background: $white;
+  border: 1px solid $gray-200;
+  border-radius: $radius-lg;
+  cursor: pointer;
+  transition: color $transition-fast, border-color $transition-fast, background $transition-fast;
+
+  &:hover:not(:disabled) {
+    color: $primary-600;
+    border-color: $primary-500;
+  }
+
+  &.active {
+    color: $white;
+    background: $primary-500;
+    border-color: $primary-500;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.page-arrow {
+  padding: 0 $spacing-4;
+}
