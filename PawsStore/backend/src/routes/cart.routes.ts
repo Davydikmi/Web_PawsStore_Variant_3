@@ -18,32 +18,62 @@ import {
   type UpdateCartItemBody,
 } from '../schemas/cart.schema.js';
 
+const cartSchema = {
+  tags: ['cart'],
+  security: [{ bearerAuth: [] }],
+};
+
 export async function cartRoutes(app: FastifyInstance): Promise<void> {
   app.addHook('preHandler', authenticate);
 
-  app.get('/', getCartHandler);
+  app.get('/', { schema: { ...cartSchema, summary: 'Get current user cart' } }, getCartHandler);
 
   app.post<{ Body: AddCartItemBody }>(
     '/items',
-    { schema: { body: addCartItemBodySchema } },
+    {
+      schema: {
+        ...cartSchema,
+        summary: 'Add a product to the cart',
+        body: addCartItemBodySchema,
+      },
+    },
     addCartItemHandler,
   );
 
   app.patch<{ Params: CartItemParams; Body: UpdateCartItemBody }>(
     '/items/:id',
-    { schema: { params: cartItemParamsSchema, body: updateCartItemBodySchema } },
+    {
+      schema: {
+        ...cartSchema,
+        summary: 'Update cart item quantity',
+        params: cartItemParamsSchema,
+        body: updateCartItemBodySchema,
+      },
+    },
     updateCartItemHandler,
   );
 
   app.delete<{ Params: CartItemParams }>(
     '/items/:id',
-    { schema: { params: cartItemParamsSchema } },
+    {
+      schema: {
+        ...cartSchema,
+        summary: 'Remove an item from the cart',
+        params: cartItemParamsSchema,
+      },
+    },
     removeCartItemHandler,
   );
 
   app.post<{ Body: ApplyPromoBody }>(
     '/apply-promo',
-    { schema: { body: applyPromoBodySchema } },
+    {
+      schema: {
+        ...cartSchema,
+        summary: 'Apply a promo code to the cart',
+        body: applyPromoBodySchema,
+      },
+    },
     applyPromoHandler,
   );
 }

@@ -21,22 +21,47 @@ import {
 
 const adminOnly = { preHandler: [authenticate, requireRole('admin')] };
 
+const publicProductSchema = { tags: ['products'] };
+const adminProductSchema = {
+  tags: ['products'],
+  security: [{ bearerAuth: [] }],
+};
+
 export async function productRoutes(app: FastifyInstance): Promise<void> {
   app.get<{ Querystring: ListProductsQuery }>(
     '/',
-    { schema: { querystring: listProductsQuerySchema } },
+    {
+      schema: {
+        ...publicProductSchema,
+        summary: 'List products with filtering, sorting and pagination',
+        querystring: listProductsQuerySchema,
+      },
+    },
     listProductsHandler,
   );
 
   app.get<{ Params: ProductIdParams }>(
     '/:id',
-    { schema: { params: productIdParamsSchema } },
+    {
+      schema: {
+        ...publicProductSchema,
+        summary: 'Get a single product',
+        params: productIdParamsSchema,
+      },
+    },
     getProductHandler,
   );
 
   app.post<{ Body: CreateProductBody }>(
     '/',
-    { ...adminOnly, schema: { body: createProductBodySchema } },
+    {
+      ...adminOnly,
+      schema: {
+        ...adminProductSchema,
+        summary: 'Create a product (admin)',
+        body: createProductBodySchema,
+      },
+    },
     createProductHandler,
   );
 
@@ -44,14 +69,26 @@ export async function productRoutes(app: FastifyInstance): Promise<void> {
     '/:id',
     {
       ...adminOnly,
-      schema: { params: productIdParamsSchema, body: updateProductBodySchema },
+      schema: {
+        ...adminProductSchema,
+        summary: 'Update a product (admin)',
+        params: productIdParamsSchema,
+        body: updateProductBodySchema,
+      },
     },
     updateProductHandler,
   );
 
   app.delete<{ Params: ProductIdParams }>(
     '/:id',
-    { ...adminOnly, schema: { params: productIdParamsSchema } },
+    {
+      ...adminOnly,
+      schema: {
+        ...adminProductSchema,
+        summary: 'Delete a product (admin)',
+        params: productIdParamsSchema,
+      },
+    },
     deleteProductHandler,
   );
 }
