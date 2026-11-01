@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import type { Product } from '@prisma/client';
+import type { Product, ProductCategory } from '@prisma/client';
 import { prisma } from '../lib/prisma.js';
 
 export interface ProductFilters {
@@ -9,6 +9,7 @@ export interface ProductFilters {
   minPrice?: number;
   maxPrice?: number;
   minRating?: number;
+  category?: ProductCategory;
   sortBy?: 'price' | 'title';
   order?: 'asc' | 'desc';
 }
@@ -17,19 +18,17 @@ export interface CreateProductData {
   title: string;
   description: string;
   price: number;
+  images: string[];
   rating?: number;
-  images?: string[];
+  reviews?: number;
+  shortDescription?: string;
+  highlights?: string[];
+  specifications?: Prisma.InputJsonValue;
+  category?: ProductCategory;
   stockQuantity?: number;
 }
 
 export type UpdateProductData = Partial<CreateProductData>;
-
-export class ProductInUseError extends Error {
-  constructor() {
-    super('Product is used in carts and cannot be deleted');
-    this.name = 'ProductInUseError';
-  }
-}
 
 function toProductResponse(product: Product) {
   return {
@@ -39,7 +38,17 @@ function toProductResponse(product: Product) {
 }
 
 export async function listProducts(filters: ProductFilters) {
-  const { page, limit, search, minPrice, maxPrice, minRating, sortBy, order } = filters;
+  const {
+    page,
+    limit,
+    search,
+    minPrice,
+    maxPrice,
+    minRating,
+    category,
+    sortBy,
+    order,
+  } = filters;
 
   const where: Prisma.ProductWhereInput = {};
 
@@ -59,6 +68,10 @@ export async function listProducts(filters: ProductFilters) {
 
   if (minRating !== undefined) {
     where.rating = { gte: minRating };
+  }
+
+  if (category) {
+    where.category = category;
   }
 
   // No sort_by means newest first; explicit sort defaults to ascending.
@@ -93,14 +106,25 @@ export async function listProducts(filters: ProductFilters) {
   };
 }
 
+export async function getProductById(id: string) {
+  const product = await prisma.product.findUnique({ where: { id } });
+
+  return product ? toProductResponse(product) : null;
+}
+
 export async function createProduct(data: CreateProductData) {
   const product = await prisma.product.create({
     data: {
       title: data.title,
       description: data.description,
+      shortDescription: data.shortDescription,
       price: data.price,
       rating: data.rating,
-      images: data.images ?? [],
+      reviews: data.reviews,
+      images: data.images,
+      highlights: data.highlights ?? [],
+      specifications: data.specifications,
+      category: data.category,
       stockQuantity: data.stockQuantity,
     },
   });
@@ -115,9 +139,14 @@ export async function updateProduct(id: string, data: UpdateProductData) {
       data: {
         title: data.title,
         description: data.description,
+        shortDescription: data.shortDescription,
         price: data.price,
         rating: data.rating,
+        reviews: data.reviews,
         images: data.images,
+        highlights: data.highlights,
+        specifications: data.specifications,
+        category: data.category,
         stockQuantity: data.stockQuantity,
       },
     });
@@ -137,14 +166,8 @@ export async function deleteProduct(id: string): Promise<boolean> {
     await prisma.product.delete({ where: { id } });
     return true;
   } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === 'P2025') {
-        return false;
-      }
-
-      if (error.code === 'P2003') {
-        throw new ProductInUseError();
-      }
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
+      return false;
     }
 
     throw error;

@@ -14,8 +14,8 @@ import {
 import {
   createProduct,
   deleteProduct,
+  getProductById,
   listProducts,
-  ProductInUseError,
   updateProduct,
 } from '../services/product.service.js';
 
@@ -23,8 +23,16 @@ export async function listProductsHandler(
   request: FastifyRequest<{ Querystring: ListProductsQuery }>,
   reply: FastifyReply,
 ) {
-  const { page = 1, limit = 12, min_price, max_price, min_rating, sort_by, order } =
-    request.query;
+  const {
+    page = 1,
+    limit = 12,
+    min_price,
+    max_price,
+    min_rating,
+    category,
+    sort_by,
+    order,
+  } = request.query;
 
   const filters = {
     page,
@@ -33,6 +41,7 @@ export async function listProductsHandler(
     minPrice: min_price,
     maxPrice: max_price,
     minRating: min_rating,
+    category,
     sortBy: sort_by,
     order,
   };
@@ -52,6 +61,19 @@ export async function listProductsHandler(
 
   reply.header('x-cache', 'MISS');
   return reply.send(result);
+}
+
+export async function getProductHandler(
+  request: FastifyRequest<{ Params: ProductIdParams }>,
+  reply: FastifyReply,
+) {
+  const product = await getProductById(request.params.id);
+
+  if (!product) {
+    return reply.code(404).send({ message: 'Product not found' });
+  }
+
+  return reply.send(product);
 }
 
 export async function createProductHandler(
@@ -83,21 +105,13 @@ export async function deleteProductHandler(
   request: FastifyRequest<{ Params: ProductIdParams }>,
   reply: FastifyReply,
 ) {
-  try {
-    const deleted = await deleteProduct(request.params.id);
+  const deleted = await deleteProduct(request.params.id);
 
-    if (!deleted) {
-      return reply.code(404).send({ message: 'Product not found' });
-    }
-
-    await invalidateProductsCache();
-
-    return reply.code(204).send();
-  } catch (error) {
-    if (error instanceof ProductInUseError) {
-      return reply.code(409).send({ message: error.message });
-    }
-
-    throw error;
+  if (!deleted) {
+    return reply.code(404).send({ message: 'Product not found' });
   }
+
+  await invalidateProductsCache();
+
+  return reply.code(204).send();
 }
