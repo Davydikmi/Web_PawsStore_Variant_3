@@ -1,6 +1,11 @@
+import { readFileSync } from 'node:fs';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
+
+const demoProducts = JSON.parse(
+  readFileSync(new URL('./data/products.json', import.meta.url), 'utf8'),
+);
 
 async function main() {
   await prisma.promoCode.upsert({
@@ -14,7 +19,20 @@ async function main() {
     },
   });
 
-  console.log('Seeded promo code SAVE10 (10% discount)');
+  for (const product of demoProducts) {
+    await prisma.product.upsert({
+      where: { id: product.id },
+      update: {},
+      create: {
+        ...product,
+        createdAt: new Date(product.createdAt),
+      },
+    });
+  }
+
+  console.log(
+    `Seeded promo code SAVE10 and ${demoProducts.length} demo products`,
+  );
 }
 
 main()
