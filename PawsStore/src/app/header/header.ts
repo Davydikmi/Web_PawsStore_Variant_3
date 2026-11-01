@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../services/cart.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,7 @@ import { CartService } from '../services/cart.service';
 })
 export class HeaderComponent {
   public cartService = inject(CartService);
+  public auth = inject(AuthService);
 
   isMobileMenuOpen = signal(false);
   
@@ -30,5 +32,10 @@ export class HeaderComponent {
   // Закрытие меню при клике на ссылку
   closeMobileMenu(): void {
     this.isMobileMenuOpen.set(false);
+  }
+
+  logout(): void {
+    this.auth.logout();
+    this.closeMobileMenu();
   }
 }
