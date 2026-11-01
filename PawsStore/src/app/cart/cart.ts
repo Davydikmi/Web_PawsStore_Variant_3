@@ -14,6 +14,18 @@ import { CartService } from '../services/cart.service';
 export class CartComponent {
   public cartService = inject(CartService);
   promoInput = '';
+
+  async applyPromo(): Promise<void> {
+    const code = this.promoInput.trim();
+
+    if (!code) {
+      return;
+    }
+
+    await this.cartService.applyPromoCode(code);
+
+    if (!this.cartService.promoError()) {
+      this.promoInput = '';
+    }
+  }
 }
-
-
