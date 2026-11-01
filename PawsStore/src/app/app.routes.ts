@@ -12,5 +12,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'cart', component: CartComponent, canActivate: [authGuard] },
+  { path: 'catalog', redirectTo: '', pathMatch: 'full' },
   { path: '**', redirectTo: '' }
 ];
