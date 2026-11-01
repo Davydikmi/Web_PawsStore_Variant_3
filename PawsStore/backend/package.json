@@ -20,6 +20,8 @@
     "@fastify/cors": "*",
     "@fastify/helmet": "*",
     "@fastify/jwt": "*",
+    "@fastify/swagger": "^9.9.3",
+    "@fastify/swagger-ui": "^6.1.2",
     "@prisma/client": "6.19.3",
     "bcryptjs": "*",
     "fastify": "*",
@@ -34,4 +36,3 @@
     "typescript": "*"
   }
 }
-
