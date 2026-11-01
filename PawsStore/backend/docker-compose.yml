@@ -30,6 +30,8 @@ services:
     command: sh -c "npx prisma migrate deploy && node prisma/seed.mjs"
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-pawsstore}?schema=public
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@pawsstore.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin12345}
     depends_on:
       postgres:
         condition: service_healthy
