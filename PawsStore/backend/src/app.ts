@@ -55,7 +55,10 @@ export async function buildApp(
     return reply.status(500).send({ message: 'Internal server error' });
   });
 
-  await app.register(cors, { origin: getCorsOrigin() });
+  await app.register(cors, {
+    origin: getCorsOrigin(),
+    methods: ['GET', 'HEAD', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+  });
   await app.register(helmet, { contentSecurityPolicy: false });
 
   await app.register(swagger, {
