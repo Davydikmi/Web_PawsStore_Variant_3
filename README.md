@@ -149,7 +149,7 @@ APP_PORT=3000
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=pawsstore
-CORS_ORIGIN="http://localhost:4200"
+CORS_ORIGIN="http://localhost:4200,http://127.0.0.1:4200"
 ADMIN_EMAIL=admin@pawsstore.local
 ADMIN_PASSWORD=admin12345
 ```
